@@ -1,0 +1,27 @@
+#container {
+  color: white;
+  border: solid 1px black;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .fields {
+    width: 97%;
+    text-align: center;
+
+    .input-fields {
+      margin-bottom: 1em;
+      color: black;
+    }
+
+    .loginBtn {
+      height: 4.5em;
+      width: 97%;
+      background-color: #ffbb00;
+    }
+  }
+}
