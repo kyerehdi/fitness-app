@@ -1,24 +1,11 @@
 <ion-content [fullscreen]="true">
   <div id="container">
-    <span class="fields">
-      <h1>Train And Track</h1>
-      <ion-input
-        label="Email"
-        label-placement="floating"
-        fill="solid"
-        placeholder="Enter Your Email"
-        class="input-fields"
-      ></ion-input>
-      <ion-input
-        label="Password"
-        label-placement="floating"
-        fill="solid"
-        placeholder="Enter Your Password"
-        class="input-fields"
-      ></ion-input>
-      <button class="loginBtn">Log In</button>
-      <br>
-      <h3>Dont have an account? <span style="color: #FFBB00">Sign Up</span></h3>
-    </span>
+    
+    <div class="context">
+      <h1 >Train <span style="color: white">and</span> Track</h1>
+      <h2>Your packet fitness coach</h2>
+      <button (click)="naviagteToPage()">Continue</button>
+    </div>
+   
   </div>
 </ion-content>
