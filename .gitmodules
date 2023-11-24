@@ -1,0 +1,3 @@
+[submodule "src/fitness-app-sdk"]
+	path = src/fitness-app-sdk
+	url = https://github.com/kyerehdi/fitness-app-sdk.git
