@@ -10,6 +10,7 @@
     <div class="height-selection">
       <h2>Height</h2>
       <app-scroll-picker
+      [value]="person.height"
         (selection)="heightSelection($event)"
       ></app-scroll-picker>
       <h2>cm</h2>

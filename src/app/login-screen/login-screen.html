@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true" class="screen">
+  <div class="container">
+
+    <div class="login-container">
+      <h1 class="tittle">Log in</h1>
+  
+      <form [formGroup]="form">
+        <div class="inputs">
+          <label for="email">E-mail</label>
+          <br />
+          <input id="email" placeholder="Enter your email" formControlName="email"/>
+          <br />
+          <label for="password" id="passwordLabel">Password</label>
+          <br />
+          <input type="password" id="password" placeholder="Enter your password"  formControlName="email"/>
+          <p>Forgot your password</p>
+        </div>
+    
+        <button class="btn-log">Log in</button>
+        <br>
+        <button class="btn-sign" (click)="navigate()">Sign up</button>
+      </form>
+      
+    </div>
+  </div>
+</ion-content>
+

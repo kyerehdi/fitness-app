@@ -1,8 +1,10 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   Renderer2,
   ViewChild,
@@ -13,11 +15,14 @@ import {
   templateUrl: 'scroll-picker.component.html',
   styleUrls: ['scroll-picker.component.scss'],
 })
-export class ScrollPicker {
+export class ScrollPicker implements AfterViewInit {
   @ViewChild('scrollPicker', { static: true })
   scrollPicker!: ElementRef;
 
   blank = ' 0';
+
+  @Input()
+  value: number;
 
   @Input()
   list = Array(140)
@@ -28,6 +33,12 @@ export class ScrollPicker {
   selection = new EventEmitter<number>();
 
   constructor() {}
+  ngAfterViewInit(): void {
+    if (this.value && this.value > 60) {
+      const index = this.value - 60;
+      this.scrollPicker.nativeElement.scrollTop = index * 55;
+    }
+  }
 
   onScroll(event: any): void {
     const container = event.target;

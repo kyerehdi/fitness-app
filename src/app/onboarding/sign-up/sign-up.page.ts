@@ -11,8 +11,11 @@ import { State, Store } from '@ngrx/store';
 import { UserState, UserStateI } from 'src/app/store/users/new-user.reducer';
 import { getPerson, getUser } from 'src/app/store/users/new-user.selectors';
 import * as CRYPTOJS from 'crypto-js';
-import { SetUser, SubmitUser } from 'src/app/store/users/new-user.actions';
+import { SetUser } from 'src/app/store/users/new-user.actions';
 import { map } from 'rxjs';
+import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sign-up-page',
@@ -32,9 +35,14 @@ export class SignUpPage implements OnInit {
 
   index = 0;
 
+  loading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
-    private store$: Store<State<UserStateI>>
+    private store$: Store<State<UserStateI>>,
+    private userService: UserService,
+    private alertController: AlertController,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -50,19 +58,47 @@ export class SignUpPage implements OnInit {
 
   onSubmit() {
     const salt = CRYPTOJS.lib.WordArray.random(128 / 8).toString();
-    const hashsedPassword = CRYPTOJS.PBKDF2('xmen4321', salt, {
-      keySize: 128 / 32,
-      iterations: 1000,
-    }).toString();
+    const hashsedPassword = CRYPTOJS.PBKDF2(
+      this.signUpForm?.get('password')?.value,
+      salt,
+      {
+        keySize: 128 / 32,
+        iterations: 1000,
+      }
+    ).toString();
 
     const user = {
-      email: this.signUpForm.get('email')?.value,
+      email: this.signUpForm.get('email')?.value.toLowerCase(),
       password: hashsedPassword,
       salt: salt,
     };
     this.store$.dispatch(SetUser({ user: user }));
+    this.userService.checkIfEmailIsNotInDB(user.email).subscribe();
 
-    this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_ONE;
+    this.checkIfEmailsIsNotInDB(user.email);
+    this.loading = true;
+  }
+
+  private checkIfEmailsIsNotInDB(email: string) {
+    this.userService
+      .checkIfEmailIsNotInDB(email)
+      .pipe(
+        map(async (value) => {
+          if (value === false) {
+            const alert = await this.alertController.create({
+              header: 'Email all ready used',
+              message:
+                'Sorry it seems like this email is already used in our system, try a different one.',
+              buttons: ['Close'],
+            });
+            await alert.present();
+          } else {
+            this.index = this.index + 1;
+            this.handlePageNav(this.index);
+          }
+        })
+      )
+      .subscribe(() => (this.loading = false));
   }
 
   checkPasswordsMatch(control: AbstractControl): ValidationErrors | null {
@@ -78,40 +114,62 @@ export class SignUpPage implements OnInit {
     return null;
   }
 
+  goBack() {
+    this.index = this.index - 1;
+    this.handlePageNav(this.index);
+  }
+
   get isSignUpPage(): boolean {
     return this.pageStatus === OnboardingConstants.SIGN_UP;
   }
 
   get isChoosingGender(): boolean {
-    this.progressValue = 0.2;
     return this.pageStatus === OnboardingConstants.ONBOARDING_STAGE_ONE;
   }
 
   get isChoosingHeightAndWeight(): boolean {
-    this.progressValue = 0.4;
     return this.pageStatus === OnboardingConstants.ONBOARDING_STAGE_TWO;
   }
 
   get isChoosingGoals(): boolean {
-    this.progressValue = 0.7;
     return this.pageStatus === OnboardingConstants.ONBOARDING_STAGE_THREE;
   }
 
   get isProfile(): boolean {
-    this.progressValue = 0.9;
     return this.pageStatus === OnboardingConstants.ONBOARDING_STAGE_FOUR;
   }
 
   handlePageNav(number: number) {
     this.index = number;
-    if (number === 2) {
-      this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_TWO;
-    } else if (number === 3) {
-      this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_THREE;
-    } else if (number === 4) {
-      this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_FOUR;
-    } else if (number === 5) {
-      this.store$.dispatch(SubmitUser());
+    switch (this.index) {
+      case 1:
+        this.progressValue = 0.2;
+        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_ONE;
+        break;
+
+      case 2:
+        this.progressValue = 0.4;
+        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_TWO;
+        break;
+
+      case 3:
+        this.progressValue = 0.7;
+        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_THREE;
+        break;
+
+      case 4:
+        this.progressValue = 0.9;
+        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_FOUR;
+        break;
+
+      default:
+        this.progressValue = 0;
+        this.pageStatus = OnboardingConstants.SIGN_UP;
+        break;
     }
+  }
+
+  navigate() {
+    this.router.navigate(['login']);
   }
 }

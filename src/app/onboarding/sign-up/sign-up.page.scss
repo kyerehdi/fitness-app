@@ -1,6 +1,5 @@
 .screen {
-  background-color: #282423;
-  height: 100vh;
+  position: absolute;
 
   .gender {
     height: 100%;
@@ -20,17 +19,30 @@
 }
 
 .container {
+  position: absolute;
   color: white;
+  top: 0;
   left: 0;
   right: 0;
-  height: 100%;
   background: linear-gradient(#282423, rgba(0, 0, 0, 0.5)),
     url("../../../assets/fitWall.png");
   background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
   font-family: Catamaran;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+
+  .spinner {
+    position: absolute;
+    left: 45%;
+    bottom: 50%;
+    font-size: large;
+    color: #79d7ff;
+    transform: scale(4);
+  }
 
   .context {
     display: block;

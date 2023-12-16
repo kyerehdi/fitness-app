@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { State, Store } from '@ngrx/store';
 import { SetWeightAndHeight } from 'src/app/store/users/new-user.actions';
 import { UserStateI } from 'src/app/store/users/new-user.reducer';
@@ -17,12 +17,17 @@ export class OnboardingHeightAndWeight implements OnInit {
 
   height: number = 0;
 
+  @Input()
+  person: any;
+
   @Output()
   continueToNextPage = new EventEmitter<number>();
 
   constructor(private store$: Store<State<UserStateI>>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.person.weight ? (this.weight = this.person.weight) : null;
+  }
 
   heightSelection(event: number) {
     this.height = event;

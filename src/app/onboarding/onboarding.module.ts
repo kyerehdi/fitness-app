@@ -14,10 +14,12 @@ import { OnboardingGoalComponent } from './oboarding-page-components/onboarding-
 import { StoreModule } from '@ngrx/store';
 import { newUserReducer } from '../store/users/new-user.reducer';
 import { OnboardingProfileComponent } from './oboarding-page-components/onboarding-profile-componenet/oboarding-profile-component';
-
+import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
+import { EffectsModule } from '@ngrx/effects';
+import { NewUserEffects } from '../store/users/new-user.effects';
 
 @NgModule({
-  providers: [],
+  providers: [UserService],
   imports: [
     CommonModule,
     FormsModule,
@@ -28,6 +30,7 @@ import { OnboardingProfileComponent } from './oboarding-page-components/onboardi
     ScrollPickerModule,
     ReactiveFormsModule,
     StoreModule.forFeature('newUserReducer', newUserReducer),
+    EffectsModule.forFeature([NewUserEffects])
   ],
   declarations: [
     SignUpPage,

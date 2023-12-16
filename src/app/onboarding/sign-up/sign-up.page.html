@@ -1,5 +1,7 @@
-<div class="screen">
+<ion-content class="screen" fullscreen="true">
   <div class="container" *ngIf="isSignUpPage">
+    <ion-spinner *ngIf="loading" class="spinner" name="circles"></ion-spinner>
+
     <div class="context">
       <h1>Track <span style="color: white">And</span> Train</h1>
       <h2>Create an account</h2>
@@ -32,7 +34,7 @@
             formControlName="reEnterPassword"
         /></span>
         <button type="submit" [disabled]="signUpForm.invalid">Sign up</button>
-        <h3>
+        <h3 (click)="navigate()">
           Already have an account? <span style="color: #79d7ff">Log in</span>
         </h3>
       </form>
@@ -40,7 +42,7 @@
   </div>
   <div class="status-bar-container">
     <div *ngIf="!isSignUpPage" class="statusBar">
-      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-icon name="arrow-back-outline" (click)="goBack()"></ion-icon>
       <ion-progress-bar
         [value]="progressValue"
         color="secondary"
@@ -51,21 +53,29 @@
 
   <div *ngIf="isChoosingGender" class="gender">
     <onboarding-page-one
+      [person]="getPerson$ |async"
       (continueToNextPage)="handlePageNav($event)"
     ></onboarding-page-one>
   </div>
 
   <div *ngIf="isChoosingHeightAndWeight" class="height-and-weight">
     <onboarding-height-and-weight
+      [person]="getPerson$ |async"
       (continueToNextPage)="handlePageNav($event)"
     ></onboarding-height-and-weight>
   </div>
 
   <div *ngIf="isChoosingGoals" class="choosing-goals">
-    <app-onboarding-goal (continueToNextPage)="handlePageNav($event)"></app-onboarding-goal>
+    <app-onboarding-goal
+      [person]="getPerson$ |async"
+      (continueToNextPage)="handlePageNav($event)"
+    ></app-onboarding-goal>
   </div>
 
   <div *ngIf="isProfile" class="profile">
-    <onboarding-profile-component (continueToNextPage)="handlePageNav($event)"></onboarding-profile-component>
+    <onboarding-profile-component
+      [person]="getPerson$ |async"
+      (continueToNextPage)="handlePageNav($event)"
+    ></onboarding-profile-component>
   </div>
-</div>
+</ion-content>

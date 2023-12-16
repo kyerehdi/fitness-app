@@ -12,7 +12,7 @@ export interface newPerson {
   fullName: string;
   age: number;
   email: string;
-  number: number;
+  number: string;
   goal: string;
   height: number;
   weight: number;
@@ -31,7 +31,7 @@ export const UserState: UserStateI = {
     fullName: '',
     age: 0,
     email: '',
-    number: 0,
+    number: '',
     goal: '',
     height: 0,
     weight: 0,
@@ -72,14 +72,15 @@ export const newUserReducer = createReducer(
   on(newUserActions.SetGoal, (state, action) => {
     const person = cloneDeep(state.person);
     person.goal = action.goal;
+
     return {
       ...state,
+      person: person,
     };
   }),
 
   on(newUserActions.SetUserProfile, (state, action) => {
     const person = cloneDeep(state.person);
-    person.email = action.email;
     person.age = action.age;
     person.fullName = action.fullName;
     person.number = action.phoneNumber;
@@ -91,9 +92,8 @@ export const newUserReducer = createReducer(
   }),
 
   on(newUserActions.SubmitUser, (state) => {
-    console.log('this is state', state);
     return {
-      ...state
-    }
+      ...state,
+    };
   })
 );
