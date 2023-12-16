@@ -1,0 +1,37 @@
+<div class="content">
+  <div class="tittle">
+    <div>
+      <h1>What is your goal?</h1>
+      <h2>Let us know you better</h2>
+    </div>
+  </div>
+
+  <div class="selection">
+    <div class="option" tabindex="0" (focus)="onFocus('Lose Weight')">
+      <div>
+        <h1>Lose Weight</h1>
+        <h3>Burn fat & get lean</h3>
+      </div>
+      <img src="../../../../assets/fire.svg" alt="fire" />
+    </div>
+
+    <div class="option" tabindex="0" (focus)="onFocus('Get Fitter')">
+      <div>
+        <h1>Get Fitter</h1>
+        <h3>Tone up & feel healthy</h3>
+      </div>
+      <img src="../../../../assets/heart.svg" alt="heart" />
+    </div>
+
+    <div class="option" tabindex="0" (focus)="onFocus('Gain Muscles')">
+      <div>
+        <h1>Gain Muscles</h1>
+        <h3>Build mass & strength</h3>
+      </div>
+      <img src="../../../../assets/dumbbell.svg" alt="dumbbell" />
+    </div>
+  </div>
+  <div class="btn-container">
+    <button (click)="handleOnContinue()">Continue</button>
+  </div>
+</div>

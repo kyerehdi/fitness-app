@@ -1,8 +1,29 @@
+.screen {
+  background-color: #282423;
+  height: 100vh;
+
+  .gender {
+    height: 100%;
+  }
+
+  .height-and-weight {
+    height: 100%;
+  }
+
+  .choosing-goals {
+    height: 100%;
+  }
+
+  .profile {
+    height: 100%;
+  }
+}
+
 .container {
   color: white;
   left: 0;
   right: 0;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(#282423, rgba(0, 0, 0, 0.5)),
     url("../../../assets/fitWall.png");
   background-size: cover;
@@ -49,12 +70,12 @@
       font-size: 20px;
       background-color: #79d7ff;
     }
-    h3{
-        margin-top: 10%;
-        font-size: 18px;
-        width: fit-content;
-        margin-left: auto;
-        margin-right: auto;
+    h3 {
+      margin-top: 10%;
+      font-size: 18px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .items {
@@ -81,5 +102,33 @@
         outline: none;
       }
     }
+  }
+}
+.status-bar-container {
+  background-color: #161211;
+  color: white;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusBar {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+
+  ion-icon {
+    font-size: 25px;
+  }
+
+  ion-progress-bar {
+    width: 60%;
+    --background: grey;
+  }
+  h2 {
+    font-size: 16px;
   }
 }

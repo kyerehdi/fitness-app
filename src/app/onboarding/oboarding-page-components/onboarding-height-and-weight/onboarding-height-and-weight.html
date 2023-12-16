@@ -1,0 +1,72 @@
+<div class="content">
+  <br />
+  <h1>Your height & weight</h1>
+  <h2>Let us know you better</h2>
+
+  <div
+    class="first-section"
+    style="border-top: white 1px solid; border-bottom: white 1px solid"
+  >
+    <div class="height-selection">
+      <h2>Height</h2>
+      <app-scroll-picker
+        (selection)="heightSelection($event)"
+      ></app-scroll-picker>
+      <h2>cm</h2>
+
+      <img
+        src="../../../../assets/icon/Icon check.png"
+        alt="checkmark"
+        class="checkmark"
+      />
+    </div>
+  </div>
+  <div class="second-section">
+    <div class="weight-container">
+      <div class="weight">
+        <h2>Weight</h2>
+        <h1>{{weight}}</h1>
+        <h2 style="margin-left: -1.5em">kg</h2>
+        <h2 style="font-size: 20px; color: #79d7ff" id="edit-weight">Edit</h2>
+      </div>
+    </div>
+  </div>
+  <div class="btn-container">
+    <button class="ctn-button" (click)="handleContinueClicked()">
+      Continue
+    </button>
+  </div>
+</div>
+
+<ion-modal #modal trigger="edit-weight">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Enter You Weight</ion-title>
+        <ion-buttons slot="end" style="color: #79d7ff">
+          <ion-button
+            (click)="modal.dismiss()"
+            [strong]="true"
+            [disabled]="!canDismiss"
+            >Dismiss</ion-button
+          >
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input
+          label="Enter your weight in kg"
+          labelPlacement="stacked"
+          type="number"
+          placeholder="151"
+          [(ngModel)]="weight"
+          min="60"
+          max="1000"
+        >
+        </ion-input>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

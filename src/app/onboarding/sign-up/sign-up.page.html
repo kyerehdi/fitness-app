@@ -1,17 +1,71 @@
-<ion-content [fullscreen]="true">
-    <div class="container">
-        <div class="context">
-            <h1>Track <span style="color: white">And</span> Train</h1>
-            <h2>Create an account</h2>
-            <label for="email">Enter your email *</label>
-            <span class="items"><ion-icon name="mail" class="icon" color="contrast"></ion-icon><input type="text" class="input-fileds" id="email"></span>
-            <label for="email">Create password *</label>
-            <span class="items"><ion-icon name="lock-closed" class="icon" color="contrast"></ion-icon><input type="password" class="input-fileds" id="email"></span>
-            <label for="email">Repeat password  *</label>
-            <span class="items"><ion-icon name="lock-closed" class="icon" color="contrast"></ion-icon><input type="password" class="input-fileds" id="email"></span>
-            <button >Sign up</button>
-            <h3>Already have an account? <span style="color:#79d7ff">Log in</span></h3>
-        </div>
+<div class="screen">
+  <div class="container" *ngIf="isSignUpPage">
+    <div class="context">
+      <h1>Track <span style="color: white">And</span> Train</h1>
+      <h2>Create an account</h2>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <label for="email">Enter your email *</label>
+        <span class="items"
+          ><ion-icon name="mail" class="icon" color="contrast"></ion-icon
+          ><input
+            type="text"
+            class="input-fileds"
+            id="email"
+            formControlName="email"
+        /></span>
+        <label for="email">Create password *</label>
+        <span class="items"
+          ><ion-icon name="lock-closed" class="icon" color="contrast"></ion-icon
+          ><input
+            type="password"
+            class="input-fileds"
+            id="password"
+            formControlName="password"
+        /></span>
+        <label for="email">Repeat password *</label>
+        <span class="items"
+          ><ion-icon name="lock-closed" class="icon" color="contrast"></ion-icon
+          ><input
+            type="password"
+            class="input-fileds"
+            id="second-password"
+            formControlName="reEnterPassword"
+        /></span>
+        <button type="submit" [disabled]="signUpForm.invalid">Sign up</button>
+        <h3>
+          Already have an account? <span style="color: #79d7ff">Log in</span>
+        </h3>
+      </form>
     </div>
+  </div>
+  <div class="status-bar-container">
+    <div *ngIf="!isSignUpPage" class="statusBar">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <ion-progress-bar
+        [value]="progressValue"
+        color="secondary"
+      ></ion-progress-bar>
+      <h2>Skip</h2>
+    </div>
+  </div>
 
-</ion-content>
+  <div *ngIf="isChoosingGender" class="gender">
+    <onboarding-page-one
+      (continueToNextPage)="handlePageNav($event)"
+    ></onboarding-page-one>
+  </div>
+
+  <div *ngIf="isChoosingHeightAndWeight" class="height-and-weight">
+    <onboarding-height-and-weight
+      (continueToNextPage)="handlePageNav($event)"
+    ></onboarding-height-and-weight>
+  </div>
+
+  <div *ngIf="isChoosingGoals" class="choosing-goals">
+    <app-onboarding-goal (continueToNextPage)="handlePageNav($event)"></app-onboarding-goal>
+  </div>
+
+  <div *ngIf="isProfile" class="profile">
+    <onboarding-profile-component (continueToNextPage)="handlePageNav($event)"></onboarding-profile-component>
+  </div>
+</div>
