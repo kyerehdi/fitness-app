@@ -5,7 +5,6 @@ import cloneDeep from 'lodash.clonedeep';
 export interface newUser {
   email: string;
   password: string;
-  salt: string;
 }
 
 export interface newPerson {

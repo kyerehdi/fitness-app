@@ -10,9 +10,8 @@ import {
 import { State, Store } from '@ngrx/store';
 import { UserState, UserStateI } from 'src/app/store/users/new-user.reducer';
 import { getPerson, getUser } from 'src/app/store/users/new-user.selectors';
-import * as CRYPTOJS from 'crypto-js';
 import { SetUser } from 'src/app/store/users/new-user.actions';
-import { map } from 'rxjs';
+import { catchError, map } from 'rxjs';
 import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -57,20 +56,9 @@ export class SignUpPage implements OnInit {
   }
 
   onSubmit() {
-    const salt = CRYPTOJS.lib.WordArray.random(128 / 8).toString();
-    const hashsedPassword = CRYPTOJS.PBKDF2(
-      this.signUpForm?.get('password')?.value,
-      salt,
-      {
-        keySize: 128 / 32,
-        iterations: 1000,
-      }
-    ).toString();
-
     const user = {
       email: this.signUpForm.get('email')?.value.toLowerCase(),
-      password: hashsedPassword,
-      salt: salt,
+      password: this.signUpForm.get('password')?.value,
     };
     this.store$.dispatch(SetUser({ user: user }));
     this.userService.checkIfEmailIsNotInDB(user.email).subscribe();
@@ -96,6 +84,15 @@ export class SignUpPage implements OnInit {
             this.index = this.index + 1;
             this.handlePageNav(this.index);
           }
+        }),
+        catchError(async (error) => {
+          const alert = await this.alertController.create({
+            header: 'Error Occured',
+            message:
+              'Sorry unknown error occured please try later.',
+            buttons: ['Close'],
+          });
+          await alert.present();
         })
       )
       .subscribe(() => (this.loading = false));
