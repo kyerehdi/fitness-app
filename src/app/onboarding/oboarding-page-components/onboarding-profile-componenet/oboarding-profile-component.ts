@@ -4,6 +4,8 @@ import { State, Store } from '@ngrx/store';
 import { SetUserProfile } from 'src/app/store/users/new-user.actions';
 import { UserStateI } from 'src/app/store/users/new-user.reducer';
 import { getPerson, getUser } from 'src/app/store/users/new-user.selectors';
+import { PhotoServiceService } from 'src/app/services/photo-service.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'onboarding-profile-component',
@@ -15,6 +17,8 @@ export class OnboardingProfileComponent implements OnInit {
   personInfo$ = this.store$.select(getPerson);
   userInfo$ = this.store$.select(getUser);
 
+  userProfilePicture: SafeResourceUrl;
+
   @Input()
   person: any;
 
@@ -22,7 +26,9 @@ export class OnboardingProfileComponent implements OnInit {
   continueToNextPage = new EventEmitter<number>();
 
   constructor(
+    private _sanitizer: DomSanitizer,
     private fb: FormBuilder,
+    private photoService: PhotoServiceService,
     private store$: Store<State<UserStateI>>
   ) {}
 
@@ -50,5 +56,15 @@ export class OnboardingProfileComponent implements OnInit {
       })
     );
     this.continueToNextPage.emit(5);
+  }
+
+  async addProfilePicture() {
+    const capturedPicture = await this.photoService.addNewToGallery();
+
+    if (capturedPicture) {
+      this.userProfilePicture = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + capturedPicture.base64String);
+    }
+
+
   }
 }

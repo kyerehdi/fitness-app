@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
   styleUrls: ['sign-up.page.scss'],
 })
 export class SignUpPage implements OnInit {
-  pageStatus: string | undefined = OnboardingConstants.SIGN_UP;
+  pageStatus: string | undefined = OnboardingConstants.ONBOARDING_STAGE_FOUR;
 
   getUser$ = this.store$.select(getUser);
 
@@ -137,33 +137,33 @@ export class SignUpPage implements OnInit {
   }
 
   handlePageNav(number: number) {
-    this.index = number;
-    switch (this.index) {
-      case 1:
-        this.progressValue = 0.2;
-        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_ONE;
-        break;
+    // this.index = number;
+    // switch (this.index) {
+    //   case 1:
+    //     this.progressValue = 0.2;
+    //     this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_ONE;
+    //     break;
 
-      case 2:
-        this.progressValue = 0.4;
-        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_TWO;
-        break;
+    //   case 2:
+    //     this.progressValue = 0.4;
+    //     this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_TWO;
+    //     break;
 
-      case 3:
-        this.progressValue = 0.7;
-        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_THREE;
-        break;
+    //   case 3:
+    //     this.progressValue = 0.7;
+    //     this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_THREE;
+    //     break;
 
-      case 4:
-        this.progressValue = 0.9;
-        this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_FOUR;
-        break;
+    //   case 4:
+    //     this.progressValue = 0.9;
+    //     this.pageStatus = OnboardingConstants.ONBOARDING_STAGE_FOUR;
+    //     break;
 
-      default:
-        this.progressValue = 0;
-        this.pageStatus = OnboardingConstants.SIGN_UP;
-        break;
-    }
+    //   default:
+    //     this.progressValue = 0;
+    //     this.pageStatus = OnboardingConstants.SIGN_UP;
+    //     break;
+    // }
   }
 
   navigate() {

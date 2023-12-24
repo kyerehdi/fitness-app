@@ -3,6 +3,14 @@
   <div class="title">
     <h1>Fill out profile</h1>
   </div>
+  <div class="profile-picture-section" (click)="addProfilePicture()">
+    <img
+      src="../../../../assets/defaultProfilePic.PNG"
+      *ngIf="!userProfilePicture"
+    />
+    <img [src]="userProfilePicture" *ngIf="userProfilePicture" />
+    <button>+</button>
+  </div>
   <form [formGroup]="formGroup">
     <div class="fields">
       <input class="field" placeholder="Full name" formControlName="fullName" />
