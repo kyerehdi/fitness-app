@@ -40,7 +40,6 @@ export class LoginPage implements OnInit {
         map((token) => {
           localStorage.setItem('token', token);
           
-          console.log('this is token', token);
         }),
         catchError(
           async (err) =>{

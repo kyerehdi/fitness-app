@@ -9,6 +9,8 @@ import { UserService } from 'src/fitness-app-sdk/package/services/user-service/u
 import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
 import cloneDeep from 'lodash.clonedeep';
 import { AlertController } from '@ionic/angular';
+import { User } from 'src/fitness-app-sdk/package/models/users';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class NewUserEffects {
@@ -35,11 +37,54 @@ export class NewUserEffects {
         const person = cloneDeep(state.person);
         person.email = action.user.email;
         person.userID = action.user.id;
+        person.profilePictureFileName = person.email + person.userID;
         return this.personService.createPerson(person).pipe(
-          map(() => newUserAction.SubmitPersonSuccess()),
+          switchMap(() => {
+            if (state.profilePictureFile) {
+              return this.personService
+                .uploadProfilePicture(
+                  state.profilePictureFile,
+                  person.profilePictureFileName
+                )
+                .pipe(map(() => newUserAction.SubmitPersonSuccess()));
+            } else {
+              return of(newUserAction.SubmitPersonSuccess());
+            }
+          }),
           catchError((err) =>
             of(newUserAction.SubmitPersonFail({ httpExpetion: err }))
           )
+        );
+      })
+    )
+  );
+
+  authenticate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(newUserAction.SubmitPersonSuccess),
+      withLatestFrom(this.store$.select(newUserState)),
+      switchMap(([_, state]) => {
+        if (state.user) {
+          const user = new User();
+          user.email = state.user.email;
+          user.password = state.user.password;
+          return this.userService.authenticate(user).pipe(
+            map((token) => {
+              localStorage.setItem('token', token);
+              this.router.navigate(['user-home']);
+              return newUserAction.authenticationSuccess();
+            }),
+            catchError((err) => {
+              return of(newUserAction.authenticationFailure({ err }));
+            })
+          );
+        }
+        return of(
+          newUserAction.authenticationFailure({
+            err: {
+              message: 'No user submitted.',
+            },
+          })
         );
       })
     )
@@ -50,5 +95,6 @@ export class NewUserEffects {
     private store$: Store<State<UserStateI>>,
     private userService: UserService,
     private personService: PersonService,
+    private router: Router
   ) {}
 }

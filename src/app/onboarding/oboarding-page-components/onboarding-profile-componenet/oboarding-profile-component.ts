@@ -6,6 +6,9 @@ import { UserStateI } from 'src/app/store/users/new-user.reducer';
 import { getPerson, getUser } from 'src/app/store/users/new-user.selectors';
 import { PhotoServiceService } from 'src/app/services/photo-service.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
+import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'onboarding-profile-component',
@@ -19,6 +22,10 @@ export class OnboardingProfileComponent implements OnInit {
 
   userProfilePicture: SafeResourceUrl;
 
+  pictureBase64: any;
+
+  profilePicture: FileData;
+
   @Input()
   person: any;
 
@@ -29,6 +36,7 @@ export class OnboardingProfileComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private photoService: PhotoServiceService,
+    private personService: PersonService,
     private store$: Store<State<UserStateI>>
   ) {}
 
@@ -53,18 +61,33 @@ export class OnboardingProfileComponent implements OnInit {
         age: age,
         fullName: fullName,
         phoneNumber: phoneNumber,
+        profilePicture: (this.profilePicture?.base64String === null || this.profilePicture?.base64String === undefined) ? null : this.profilePicture
+
       })
     );
     this.continueToNextPage.emit(5);
+  
   }
 
   async addProfilePicture() {
     const capturedPicture = await this.photoService.addNewToGallery();
 
+    this.pictureBase64 = capturedPicture;
+
     if (capturedPicture) {
-      this.userProfilePicture = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + capturedPicture.base64String);
+      this.userProfilePicture = this._sanitizer.bypassSecurityTrustResourceUrl(
+        'data:image/jpg;base64,' + capturedPicture.base64String
+      );
+
+        const selectedImage = new FileData();
+        selectedImage.base64String = String(capturedPicture.base64String);
+        selectedImage.format = String(capturedPicture.format);
+
+        this.profilePicture = cloneDeep(selectedImage);
+
+
     }
 
-
+    
   }
 }

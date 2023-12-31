@@ -2,6 +2,7 @@ import { Action, createAction, props } from '@ngrx/store';
 import { newUser } from './new-user.reducer';
 import { newPerson } from './new-user.reducer';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
 
 export const SetUser = createAction('Set User', props<{ user: newUser }>());
 
@@ -17,7 +18,12 @@ export const SetWeightAndHeight = createAction(
 
 export const SetUserProfile = createAction(
   'Set Users Profile',
-  props<{ age: number; fullName: string; phoneNumber: string }>()
+  props<{
+    age: number;
+    fullName: string;
+    phoneNumber: string;
+    profilePicture?: FileData | null;
+  }>()
 );
 
 export const SetGoal = createAction('Set Goals', props<{ goal: string }>());
@@ -40,3 +46,8 @@ export const SubmitPersonFail = createAction(
   props<{ httpExpetion: any }>()
 );
 
+
+export const authenticationSuccess = createAction('Login Success');
+
+
+export const authenticationFailure = createAction('Login Failure', props<{err: any}>());

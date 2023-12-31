@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as newUserActions from './new-user.actions';
 import cloneDeep from 'lodash.clonedeep';
+import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
 
 export interface newUser {
   email: string;
@@ -17,11 +18,14 @@ export interface newPerson {
   weight: number;
   gender: string;
   userID: number | null;
+  profilePictureFileName: string;
 }
 
 export interface UserStateI {
   user: newUser | null;
   person: newPerson;
+  profilePictureFile: FileData | null;
+  isLoggedIn: boolean;
 }
 
 export const UserState: UserStateI = {
@@ -36,7 +40,10 @@ export const UserState: UserStateI = {
     weight: 0,
     gender: '',
     userID: 0,
+    profilePictureFileName: '',
   },
+  isLoggedIn: false,
+  profilePictureFile: null,
 };
 
 export const newUserReducer = createReducer(
@@ -87,12 +94,20 @@ export const newUserReducer = createReducer(
     return {
       ...state,
       person: person,
+      profilePictureFile: action.profilePicture ? action.profilePicture : null,
     };
   }),
 
   on(newUserActions.SubmitUser, (state) => {
     return {
       ...state,
+    };
+  }),
+
+  on(newUserActions.authenticationSuccess, (state) => {
+    return {
+      ...state,
+      isLoggedIn: true,
     };
   })
 );

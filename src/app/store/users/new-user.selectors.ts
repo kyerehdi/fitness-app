@@ -12,3 +12,8 @@ export const getPerson = createSelector(
   newUserState,
   (state: UserStateI) => state?.person
 );
+
+export const getIsLoggedIn = createSelector(
+  newUserState,
+  (state:UserStateI) => state.isLoggedIn
+)
