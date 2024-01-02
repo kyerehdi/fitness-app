@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { State, Store } from '@ngrx/store';
 import { Subject, map, take, takeUntil } from 'rxjs';
 import { UserStateI } from 'src/app/store/users/new-user.reducer';
@@ -24,6 +24,7 @@ export class AuthetnicatedUserService implements OnDestroy {
       )
       .subscribe();
   }
+
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();

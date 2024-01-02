@@ -5,7 +5,7 @@ export const newUserState = createFeatureSelector<UserStateI>('newUserReducer');
 
 export const getUser = createSelector(
   newUserState,
-  (state: UserStateI) => state.user
+  (state: UserStateI) => state?.user
 );
 
 export const getPerson = createSelector(
@@ -15,5 +15,5 @@ export const getPerson = createSelector(
 
 export const getIsLoggedIn = createSelector(
   newUserState,
-  (state:UserStateI) => state.isLoggedIn
+  (state:UserStateI) => state?.isLoggedIn
 )

@@ -39,15 +39,34 @@ export const SubmitUserFail = createAction(
   props<{ httpExpetion: any }>()
 );
 
-export const SubmitPersonSuccess = createAction('Person has been submited');
+export const SubmitPersonSuccess = createAction(
+  'Person has been submited',
+  props<{
+    user: {
+      email: string;
+      password: string;
+    };
+  }>()
+);
 
 export const SubmitPersonFail = createAction(
   'Person submission has failed',
   props<{ httpExpetion: any }>()
 );
 
+export const authenticate = createAction(
+  'Authenticate User',
+  props<{
+    user: {
+      email: string;
+      password: string;
+    };
+  }>()
+);
 
 export const authenticationSuccess = createAction('Login Success');
 
-
-export const authenticationFailure = createAction('Login Failure', props<{err: any}>());
+export const authenticationFailure = createAction(
+  'Login Failure',
+  props<{ err: any }>()
+);

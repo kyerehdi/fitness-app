@@ -46,9 +46,25 @@ export class NewUserEffects {
                   state.profilePictureFile,
                   person.profilePictureFileName
                 )
-                .pipe(map(() => newUserAction.SubmitPersonSuccess()));
+                .pipe(
+                  map(() =>
+                    newUserAction.SubmitPersonSuccess({
+                      user: {
+                        email: state.user!.email,
+                        password: state.user!.password,
+                      },
+                    })
+                  )
+                );
             } else {
-              return of(newUserAction.SubmitPersonSuccess());
+              return of(
+                newUserAction.SubmitPersonSuccess({
+                  user: {
+                    email: state.user!.email,
+                    password: state.user!.password,
+                  },
+                })
+              );
             }
           }),
           catchError((err) =>
@@ -61,13 +77,13 @@ export class NewUserEffects {
 
   authenticate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(newUserAction.SubmitPersonSuccess),
+      ofType(newUserAction.SubmitPersonSuccess, newUserAction.authenticate),
       withLatestFrom(this.store$.select(newUserState)),
-      switchMap(([_, state]) => {
-        if (state.user) {
+      switchMap(([action, state]) => {
+        if (action.user) {
           const user = new User();
-          user.email = state.user.email;
-          user.password = state.user.password;
+          user.email = action.user.email;
+          user.password = action.user.password;
           return this.userService.authenticate(user).pipe(
             map((token) => {
               localStorage.setItem('token', token);

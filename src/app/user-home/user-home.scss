@@ -1,0 +1,54 @@
+.context {
+  color: black;
+}
+#container {
+  background-color: #161616;
+  display: block;
+  height: 100%;
+  // min-height: 100%;
+  .header-group {
+    border: white 1px solid;
+    height: 30%;
+
+    .workout-tracker{
+        border: white solid 1px;
+        height: 90%;
+        
+    }
+
+    .header-title-group {
+      padding-left: 1.5em;
+      padding-right: 1.5em;
+      height: 40%;
+      border: white 1px solid;
+      display: flex;
+      color: white;
+      justify-content: center;
+      align-items: center;
+
+      .default-pic {
+        border-radius: 3em;
+        height: 3em;
+        margin-right: 1em;
+
+      }
+
+      .notification-icon {
+        font-size: 30px;
+      }
+
+      .greetings {
+        margin-right: 1em;
+
+        h1 {
+          font-size: 24px;
+        }
+
+        p {
+          margin-top: -8%;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
