@@ -11,9 +11,32 @@
       </div>
 
       <div class="workout-tracker">
-        <h1>You've done 3 workouts this week!</h1>
-        <p>75% of your weekly goal is completed</p>
+        <div class="content-tracker">
+          <h1>You've done 3 workouts this week!</h1>
+          <p>75% of your weekly goal is completed</p>
+          <ion-progress-bar value=".6" color="secondary"></ion-progress-bar>
+        </div>
       </div>
+    </div>
+    <ion-row color="primary" class="row">
+      <ion-segment color="primary">
+        <ion-segment-button value="t1">
+          <ion-label color="light">Discover</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="t2">
+          <ion-label color="light">Trainers</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="t3">
+          <ion-label color="light">My Plan</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-row>
+
+    <div class="search-container">
+      <div class="search-bar-container">
+        <ion-searchbar color="grey"></ion-searchbar>
+      </div>
+      <ion-icon name="menu" class="menu-icon"></ion-icon>
     </div>
   </div>
 </ion-content>

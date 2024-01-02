@@ -5,22 +5,62 @@
   background-color: #161616;
   display: block;
   height: 100%;
+  color: white;
+
+  .row {
+  color: white;
+   border-bottom: 1px solid white;
+   width: 95%;
+   margin-left: auto;
+   margin-right: auto;
+  }
+
+  .search-container {
+    display: flex;
+   
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1em;
+    padding-right: 1em;
+    .search-bar-container {
+        width: 75%;
+    }
+    .menu-icon{
+        font-size: 40px;
+    }
+  }
+
   // min-height: 100%;
   .header-group {
-    border: white 1px solid;
+    // border: white 1px solid;
     height: 30%;
 
-    .workout-tracker{
-        border: white solid 1px;
-        height: 90%;
-        
+    .workout-tracker {
+      height: 55%;
+      width: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 1em;
+      background-color: #282423;
+      h1 {
+        font-size: 18px;
+      }
+
+      .content-tracker {
+        p {
+          margin-top: -0.5em;
+        }
+      }
     }
 
     .header-title-group {
       padding-left: 1.5em;
       padding-right: 1.5em;
       height: 40%;
-      border: white 1px solid;
+      //   border: white 1px solid;
       display: flex;
       color: white;
       justify-content: center;
@@ -30,7 +70,6 @@
         border-radius: 3em;
         height: 3em;
         margin-right: 1em;
-
       }
 
       .notification-icon {
