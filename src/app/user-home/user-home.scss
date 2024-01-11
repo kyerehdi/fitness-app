@@ -7,26 +7,33 @@
   height: 100%;
   color: white;
 
+  .workouts {
+    margin-left: 1em;
+    display: flex;
+    overflow-x: auto;
+    gap: 1em;
+  }
+
   .row {
-  color: white;
-   border-bottom: 1px solid white;
-   width: 95%;
-   margin-left: auto;
-   margin-right: auto;
+    color: white;
+    border-bottom: 1px solid white;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .search-container {
     display: flex;
-   
+
     align-items: center;
     justify-content: space-between;
     padding-left: 1em;
     padding-right: 1em;
     .search-bar-container {
-        width: 75%;
+      width: 75%;
     }
-    .menu-icon{
-        font-size: 40px;
+    .menu-icon {
+      font-size: 40px;
     }
   }
 

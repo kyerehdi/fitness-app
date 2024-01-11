@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { UserHomePage } from "./user-home";
 import { Routes, RouterModule } from "@angular/router";
+import { WorkoutCardModule } from "../components/workout-card/workout-card.component.module";
 
 const routes: Routes = [
     {
@@ -13,7 +14,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes),CommonModule, IonicModule],
+    imports: [RouterModule.forChild(routes),CommonModule, IonicModule, WorkoutCardModule],
     declarations: [UserHomePage],
 
 })
