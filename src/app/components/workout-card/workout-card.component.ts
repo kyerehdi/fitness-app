@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
-
+import { Component, Input } from '@angular/core';
 
 @Component({
-    selector:'workout-card',
-    templateUrl: 'workout-card.component.html',
-    styleUrls: ['workout-card.component.scss']
+  selector: 'workout-card',
+  templateUrl: 'workout-card.component.html',
+  styleUrls: ['workout-card.component.scss'],
 })
+export class WorkoutCard {
+  @Input()
+  src: string;
 
-export class WorkoutCard{
-    
+  constructor() {}
+
+  
 }
