@@ -7,6 +7,17 @@
   height: 100%;
   color: white;
 
+
+
+  .spinner {
+    position: absolute;
+    left: 45%;
+    bottom: 50%;
+    font-size: large;
+    color: #79d7ff;
+    transform: scale(4);
+  }
+
   .workouts {
     margin-left: 1em;
     display: flex;

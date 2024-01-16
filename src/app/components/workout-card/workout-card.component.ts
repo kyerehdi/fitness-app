@@ -7,9 +7,13 @@ import { Component, Input } from '@angular/core';
 })
 export class WorkoutCard {
   @Input()
-  src: string;
+  src: string = '';
+
+  @Input()
+  name: string = "";
+
+  @Input()
+  bodyCategory: string =''
 
   constructor() {}
-
-  
 }

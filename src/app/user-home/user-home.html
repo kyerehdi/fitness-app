@@ -32,6 +32,7 @@
       </ion-segment>
     </ion-row>
 
+    <ng-container *ngIf="!loading">
     <div class="search-container">
       <div class="search-bar-container">
         <ion-searchbar color="grey"></ion-searchbar>
@@ -40,17 +41,18 @@
     </div>
     <h1 style="font-size: 20px; margin-left: 1em">Most popular workouts</h1>
     <div class="workouts">
-      <workout-card [src]="getSrc()"></workout-card>
-      <workout-card></workout-card>
-      <workout-card></workout-card>
+     <workout-card *ngFor="let workoutFile of workoutFiles" [src]="workoutFile.gifUrl" ></workout-card>
     </div>
 
     <h1 style="font-size: 20px; margin-left: 1em">Quick workouts</h1>
 
     <div class="workouts">
-      <workout-card [src]="getSrc()"></workout-card>
-      <workout-card></workout-card>
-      <workout-card></workout-card>
+      
     </div>
+  </ng-container>
+
+  <ng-container *ngIf="loading">
+    <ion-spinner class="spinner" name="circles"></ion-spinner>
+  </ng-container>
   </div>
 </ion-content>
