@@ -41,13 +41,13 @@
     </div>
     <h1 style="font-size: 20px; margin-left: 1em">Most popular workouts</h1>
     <div class="workouts">
-     <workout-card *ngFor="let workoutFile of workoutFiles" [src]="workoutFile.gifUrl" ></workout-card>
+     <workout-card *ngFor="let workoutFile of workoutFiles" [src]="workoutFile.gifUrl" [name]="workoutFile.workout.workout_name" [bodyCategory]="workoutFile.workout.major_muscle_group"></workout-card>
     </div>
 
     <h1 style="font-size: 20px; margin-left: 1em">Quick workouts</h1>
 
     <div class="workouts">
-      
+      <workout-card *ngFor="let workoutFile of quickWorkoutFiles" [src]="workoutFile.gifUrl" [name]="workoutFile.workout.workout_name" [bodyCategory]="workoutFile.workout.major_muscle_group"></workout-card>
     </div>
   </ng-container>
 

@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, map, takeUntil } from 'rxjs';
+import { Subject, finalize, map, switchMap, takeUntil, tap } from 'rxjs';
 import { WorkoutFile } from 'src/fitness-app-sdk/package/models/workoutFile';
 import { WorkoutService } from 'src/fitness-app-sdk/package/services/workout-service/workout-service';
+import { UserHomeStateI } from '../store/user-home/user-home.reducer';
+import { State, Store } from '@ngrx/store';
+import * as userHomeActions from '../store/user-home/user-home.action'
 @Component({
   selector: 'app-user-home',
   templateUrl: 'user-home.html',
@@ -12,20 +15,12 @@ export class UserHomePage implements OnInit, OnDestroy {
   loading: boolean = true;
   readonly destroy$ = new Subject<boolean>();
   workoutFiles!: Array<WorkoutFile>;
+  quickWorkoutFiles!: Array<WorkoutFile>;
 
-  constructor(private workoutService: WorkoutService) {}
+  constructor(private workoutService: WorkoutService, private store$: Store<State<UserHomeStateI>>) {}
 
   ngOnInit(): void {
-    this.workoutService
-      .fetchAllWorkouts()
-      .pipe(
-        takeUntil(this.destroy$),
-        map((workoutFiles) => {
-          this.workoutFiles = workoutFiles;
-          this.loading = false;
-        })
-      )
-      .subscribe();
+    this.store$.dispatch(userHomeActions.FetchPopularWorkouts());
   }
 
   ngOnDestroy(): void {

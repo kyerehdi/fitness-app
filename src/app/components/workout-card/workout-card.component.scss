@@ -9,9 +9,20 @@
   background-size: cover;
   background-position: center;
 
+  
+  .add{
+    position: absolute;
+    top: 8%;
+    color: black;
+    transform: scale(2);
+    left: 5%;
+    z-index: 9;
+  }
+
+
   .label {
     position: absolute;
-    top: 60%;
+    top: 61%;
     height: 40%;
     width: 100%;
     z-index: 1;
