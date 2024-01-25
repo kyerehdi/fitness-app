@@ -11,6 +11,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { AlertController } from '@ionic/angular';
 import { User } from 'src/fitness-app-sdk/package/models/users';
 import { Router } from '@angular/router';
+import { SecureStorage } from 'src/app/services/secureStorage/secure-storage';
 
 @Injectable()
 export class NewUserEffects {
@@ -88,6 +89,7 @@ export class NewUserEffects {
             map((token) => {
               localStorage.setItem('token', token);
               this.router.navigate(['user-home']);
+              this.secureStorage.setValue('user', JSON.stringify(user));
               return newUserAction.authenticationSuccess();
             }),
             catchError((err) => {
@@ -106,11 +108,45 @@ export class NewUserEffects {
     )
   );
 
+  refreshAuthentication$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(newUserAction.refreshAuthentication),
+        map(() => {
+          let newUser: {
+            email: string;
+            password: string;
+          } = {
+            email: '',
+            password: '',
+          };
+          const userString = this.secureStorage.getValue('user');
+          userString.then((value) => {
+            const user = JSON.parse(value);
+            user as {
+              email: string;
+              password: string;
+            };
+            newUser = user;
+
+            this.store$.dispatch(
+              newUserAction.authenticate({
+                user: newUser,
+              })
+            );
+          });
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private store$: Store<State<UserStateI>>,
     private userService: UserService,
     private personService: PersonService,
-    private router: Router
+    private router: Router,
+    private secureStorage: SecureStorage
   ) {}
 }

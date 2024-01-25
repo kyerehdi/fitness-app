@@ -31,6 +31,7 @@ export class AuthetnicatedUserService implements OnDestroy {
   }
 
   getIsUserLoggedIn(): boolean {
+    console.log(this.isUserLoggedIn);
     return this.isUserLoggedIn;
   }
 }

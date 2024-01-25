@@ -30,7 +30,7 @@ export const userHomeReducer = createReducer(
   on(userHomeActions.FetchQuickWorkoutsSuccess, (state, actions) => {
     return {
       ...state,
-      popularWorkouts: actions.workouts,
+      quickWorkouts: actions.workouts,
       loading: false,
     };
   })

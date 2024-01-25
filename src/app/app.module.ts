@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
+import { NewUserEffects } from './store/users/new-user.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     StoreModule.forRoot(),
     HttpClientModule,
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([NewUserEffects]),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

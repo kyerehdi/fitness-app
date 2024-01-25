@@ -29,7 +29,7 @@ const routes: Routes = [
     path: 'user-home',
     loadChildren: () =>
       import('./user-home/user-home.module').then((m) => m.UserHomePageModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
 ];
 

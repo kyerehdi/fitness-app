@@ -1,5 +1,5 @@
 import { Action, createAction, props } from '@ngrx/store';
-import { newUser } from './new-user.reducer';
+import { UserStateI, newUser } from './new-user.reducer';
 import { newPerson } from './new-user.reducer';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
@@ -70,3 +70,8 @@ export const authenticationFailure = createAction(
   'Login Failure',
   props<{ err: any }>()
 );
+
+export const refreshAuthentication = createAction('Refreshing authentiation');
+
+
+export const RestoreState = createAction('Restore The State', props<{state: UserStateI}>());

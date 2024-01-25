@@ -4,10 +4,40 @@
 #container {
   background-color: #161616;
   display: block;
-  height: 100%;
+  min-height: 100%;
+  min-width: 100%;
   color: white;
 
+  .categories {
+    display: flex;
+    overflow-x: scroll;
+    padding-bottom: 1.5em;
+    gap: 1em;
+    margin-left: auto;
+    margin-right: auto;
 
+    .category {
+      height: 6em;
+      width: 6em;
+    
+
+      text-align: center;
+
+      .category-img {
+        height: 70%;
+
+        img {
+          padding: 1em;
+          display: block;
+          height: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 5px;
+          background-color: #282423;
+        }
+      }
+    }
+  }
 
   .spinner {
     position: absolute;
