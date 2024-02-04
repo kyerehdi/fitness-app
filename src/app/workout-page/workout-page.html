@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="workoutFile">
+    <div class="container">
+      <div class="header-group">
+        <span (click)="navigateBack()"
+          ><ion-icon name="arrow-back-outline"></ion-icon
+        ></span>
+        <h1>{{workoutFile.workout.workout_name}}</h1>
+      </div>
+      <div class="workout">
+        <img [src]="workoutFile.gifUrl" alt="" />
+      </div>
+
+      <form>
+        <h1>Add Workout</h1>
+        <div class="workout-inputs">
+          <div>
+            <label for="weight">Weight</label>
+            <input id="weight" />
+          </div>
+          <div>
+            <label for="reps">Reps</label>
+            <input id="reps" />
+          </div>
+          <div>
+            <label for="sets">Sets</label>
+            <input id="sets" />
+          </div>
+          <div>
+            <label for="intensity">Intensity</label>
+            <ion-select placeholder="Intensity">
+              <ion-select-option>Easy</ion-select-option>
+              <ion-select-option>Medium</ion-select-option>
+              <ion-select-option>Hard</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+        <button>Add Workout</button>
+      </form>
+    </div>
+  </ng-container>
+</ion-content>

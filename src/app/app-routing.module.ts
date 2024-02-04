@@ -31,6 +31,22 @@ const routes: Routes = [
       import('./user-home/user-home.module').then((m) => m.UserHomePageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'workoutPage',
+    loadChildren: () =>
+      import('./workout-page/workout-page.module').then(
+        (m) => m.WorkoutPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'workoutTracker',
+    loadChildren: () =>
+      import('./workout-tracker/workout-tacker.module').then(
+        (m) => m.WorkoutTrackerModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

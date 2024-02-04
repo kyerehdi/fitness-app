@@ -1,5 +1,5 @@
 <div class="container" [style.backgroundImage]="'url(' + src + ')'">
-  <ion-icon name="create-outline" class="add"></ion-icon>
+  <ion-icon name="create-outline" class="add" (click)="navToWorkout()"></ion-icon>
   <div class="label">
     <h1>{{ name }}</h1>
     <p>{{ bodyCategory }}</p>

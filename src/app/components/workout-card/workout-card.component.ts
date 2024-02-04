@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'workout-card',
@@ -15,5 +15,13 @@ export class WorkoutCard {
   @Input()
   bodyCategory: string =''
 
+
+  @Output()
+  iconClicked = new EventEmitter();
+
   constructor() {}
+
+  navToWorkout(){
+    this.iconClicked.emit();
+  }
 }

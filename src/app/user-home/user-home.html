@@ -47,6 +47,7 @@
           [src]="workoutFile.gifUrl"
           [name]="workoutFile.workout.workout_name"
           [bodyCategory]="workoutFile.workout.major_muscle_group"
+          (iconClicked)="navToWorkoutPage(workoutFile)"
         ></workout-card>
       </div>
 
@@ -97,8 +98,6 @@
         </div>
         <p>Back</p>
       </div>
-   
-      
     </div>
 
     <ng-container *ngIf="(isLoading$ | async)">

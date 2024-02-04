@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { NewUserEffects } from './store/users/new-user.effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +21,10 @@ import { NewUserEffects } from './store/users/new-user.effects';
     StoreModule.forRoot(),
     HttpClientModule,
     EffectsModule.forRoot([NewUserEffects]),
+    BrowserAnimationsModule,
+
+
+
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

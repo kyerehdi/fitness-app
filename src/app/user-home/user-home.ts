@@ -6,6 +6,8 @@ import { UserHomeStateI } from '../store/user-home/user-home.reducer';
 import { State, Store } from '@ngrx/store';
 import * as userHomeActions from '../store/user-home/user-home.action';
 import * as userHomeSelectors from '../store/user-home/user-home.selector';
+import { WorkoutDataService } from '../services/workout-data-service/workout-data.service';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-user-home',
   templateUrl: 'user-home.html',
@@ -21,7 +23,9 @@ export class UserHomePage implements OnInit, OnDestroy {
   isLoading$ = this.store$.select(userHomeSelectors.getLoading);
 
   constructor(
+    private workoutDataService: WorkoutDataService,
     private workoutService: WorkoutService,
+    private routeService: Router,
     private store$: Store<State<UserHomeStateI>>
   ) {}
 
@@ -32,5 +36,12 @@ export class UserHomePage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
+  }
+
+  navToWorkoutPage(workoutFile: WorkoutFile) {
+    this.workoutDataService.storeWorkoutData(workoutFile);
+    this.routeService.navigate(['workoutPage']);
+    
+
   }
 }
