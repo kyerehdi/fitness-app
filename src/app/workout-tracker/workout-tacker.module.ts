@@ -4,9 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { WorkoutTracker } from './workout-tracker';
 import { IgxCalendarModule } from 'igniteui-angular';
-
-import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatCardModule } from '@angular/material/card';
+import { WorkoutChipModule } from '../components/workout-chips/workout.chips.module';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  providers: [],
+  providers: [provideNativeDateAdapter()],
   declarations: [WorkoutTracker],
   imports: [
     CommonModule,
@@ -24,9 +25,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     IgxCalendarModule,
-
-    MatDatepickerModule
-
+    MatDatepickerModule,
+    WorkoutChipModule,
+    MatCardModule,
   ],
 })
 export class WorkoutTrackerModule {}

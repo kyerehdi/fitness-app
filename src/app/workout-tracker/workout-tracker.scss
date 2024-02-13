@@ -3,4 +3,38 @@
   background-color: #161211;
   border: #161211 1px solid;
   color: white;
+
+
+  ion-label {
+    color: white;
+  }
+
+  ion-datetime {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    --background: #161211;
+    --title-color: white;
+    --color: white;
+    --wheel-highlight-background: #161211;
+    --wheel-fade-background-rgb: rgb(255, 255, 255);
+  }
+
+  .workout-container {
+    height: 50vh;
+    overflow-y: scroll;
+
+    .title{
+        text-align: center;
+    }
+
+    workout-chip {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      width: 90%;
+      --width: 100%;
+      margin-bottom: 1em;
+    }
+  }
 }

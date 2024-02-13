@@ -1,5 +1,53 @@
 <ion-content [fullscreen]="true">
-  <div class="container">
-    <mat-datepicker ></mat-datepicker>
+<div class="container">
+  <ion-datetime
+    formControl="dateControl"
+    (ionChange)="getDate($event)"
+  ></ion-datetime>
+  <div class="workout-container">
+    <h1 class="title">Workouts History on {{date}}</h1>
+    <div class="workouts">
+      <workout-chip
+        workoutData="135lb 2 sets 8 reps medium intensity "
+        workoutTitle="BenchPress"
+      ></workout-chip>
+
+      <workout-chip
+        workoutData="200lb 3 sets 5 reps high intensity"
+        workoutTitle="Squat"
+      >
+      </workout-chip>
+
+      <workout-chip
+        workoutData="150lb 4 sets 10 reps medium intensity"
+        workoutTitle="Deadlift"
+      >
+      </workout-chip>
+
+      <workout-chip
+        workoutData="25lb 3 sets 12 reps low intensity"
+        workoutTitle="Shoulder Press"
+      >
+      </workout-chip>
+
+      <workout-chip
+        workoutData="100lb 3 sets 10 reps medium intensity"
+        workoutTitle="Barbell Row"
+      >
+      </workout-chip>
+
+      <workout-chip
+        workoutData="50lb 3 sets 15 reps low intensity"
+        workoutTitle="Lunges"
+      >
+      </workout-chip>
+
+      <workout-chip
+        workoutData="80lb 4 sets 8 reps high intensity"
+        workoutTitle="Pull-ups (Weighted)"
+      >
+      </workout-chip>
+    </div>
   </div>
-</ion-content> 
+</div>
+</ion-content>

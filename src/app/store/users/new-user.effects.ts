@@ -88,7 +88,7 @@ export class NewUserEffects {
           return this.userService.authenticate(user).pipe(
             map((token) => {
               localStorage.setItem('token', token);
-              this.router.navigate(['user-home']);
+              this.router.navigate(['workoutTracker']);
               this.secureStorage.setValue('user', JSON.stringify(user));
               return newUserAction.authenticationSuccess();
             }),

@@ -29,7 +29,7 @@ const routes: Routes = [
     path: 'user-home',
     loadChildren: () =>
       import('./user-home/user-home.module').then((m) => m.UserHomePageModule),
-    canActivate: [AuthGuard],
+   
   },
   {
     path: 'workoutPage',
@@ -37,7 +37,7 @@ const routes: Routes = [
       import('./workout-page/workout-page.module').then(
         (m) => m.WorkoutPageModule
       ),
-    canActivate: [AuthGuard],
+
   },
   {
     path: 'workoutTracker',
@@ -45,7 +45,7 @@ const routes: Routes = [
       import('./workout-tracker/workout-tacker.module').then(
         (m) => m.WorkoutTrackerModule
       ),
-    canActivate: [AuthGuard],
+    
   },
 ];
 
