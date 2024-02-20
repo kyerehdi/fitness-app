@@ -1,0 +1,40 @@
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { UserWorkoutStateI } from './user-workouts.reducer';
+import { State, Store } from '@ngrx/store';
+import * as userWorkoutActions from './user-workouts.actions';
+import { catchError, map, of, switchMap } from 'rxjs';
+import { UserWorkoutService } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
+
+@Injectable()
+export class UserWorkouts {
+  GetWorkOutsFromDate$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userWorkoutActions.GetWorkOutsFromDate),
+      switchMap((action) => {
+        console.log('getting workouts');
+        return this.userWorkoutService
+          .getWorkoutFromDate(action.year, action.month, action.personId)
+          .pipe(
+            map((userWorkouts) =>
+              userWorkoutActions.GetWorkOutsFromDateSuccess({
+                workouts: userWorkouts,
+              })
+            ),
+            catchError((error) => {
+              console.log('eeror occured');
+              return of(
+                userWorkoutActions.GetWorkOutsFromDateFailure({ error })
+              );
+            })
+          );
+      })
+    );
+  });
+
+  constructor(
+    private actions$: Actions,
+    private store$: Store<State<UserWorkoutStateI>>,
+    private userWorkoutService: UserWorkoutService
+  ) {}
+}

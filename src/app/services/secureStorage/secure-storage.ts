@@ -15,13 +15,6 @@ export class SecureStorage {
       key: name,
       value: obj,
     });
-
-    console.log(
-      'from service',
-      SecureStoragePlugin.get({
-        key: name,
-      })
-    );
   }
 
   async getValue(name: string): Promise<string> {

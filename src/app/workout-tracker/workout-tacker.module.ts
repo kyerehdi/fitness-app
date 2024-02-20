@@ -8,6 +8,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { WorkoutChipModule } from '../components/workout-chips/workout.chips.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { UserWorkoutReducer } from '../store/user-workouts/user-workouts.reducer';
+import { UserWorkouts } from '../store/user-workouts/user-workouts.effectt';
+
 
 const routes: Routes = [
   {
@@ -24,6 +29,8 @@ const routes: Routes = [
     RouterModule,
     IonicModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature('UserWorkoutReducer', UserWorkoutReducer),
+    EffectsModule.forFeature([UserWorkouts]),
     IgxCalendarModule,
     MatDatepickerModule,
     WorkoutChipModule,

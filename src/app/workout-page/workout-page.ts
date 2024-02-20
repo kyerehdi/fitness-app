@@ -19,11 +19,11 @@ export class WorkoutPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
   ngOnInit(): void {
     this.workoutFile = this.workoutDataService.getWorkoutFile();
-    console.log('this is workoutFile', this.workoutFile);
+   
   }
 
   navigateBack() {
-    console.log('working');
+    
     this.location.back();
   }
 }

@@ -15,5 +15,10 @@ export const getPerson = createSelector(
 
 export const getIsLoggedIn = createSelector(
   newUserState,
-  (state:UserStateI) => state?.isLoggedIn
-)
+  (state: UserStateI) => state?.isLoggedIn
+);
+
+export const getPersonId = createSelector(
+  newUserState,
+  (state: UserStateI) => state?.personId
+);

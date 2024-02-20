@@ -3,6 +3,7 @@ import { UserStateI, newUser } from './new-user.reducer';
 import { newPerson } from './new-user.reducer';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
+import { User } from 'src/fitness-app-sdk/package/models/users';
 
 export const SetUser = createAction('Set User', props<{ user: newUser }>());
 
@@ -64,7 +65,15 @@ export const authenticate = createAction(
   }>()
 );
 
-export const authenticationSuccess = createAction('Login Success');
+export const authenticationSuccess = createAction(
+  'Login Success',
+  props<{ userId: number }>()
+);
+
+export const fetchPersonId = createAction(
+  'Fetch Person ID',
+  props<{ userId: number }>
+);
 
 export const authenticationFailure = createAction(
   'Login Failure',
@@ -73,5 +82,16 @@ export const authenticationFailure = createAction(
 
 export const refreshAuthentication = createAction('Refreshing authentiation');
 
+export const RestoreState = createAction(
+  'Restore The State',
+  props<{ state: UserStateI }>()
+);
 
-export const RestoreState = createAction('Restore The State', props<{state: UserStateI}>());
+export const getPersonIdSuccess = createAction(
+  'Person Id has been succesfully retrieved',
+  props<{ personId: number }>()
+);
+
+export const getPersonIdFailure = createAction(
+  'Person Id has not been retrieved'
+);

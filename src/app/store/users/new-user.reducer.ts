@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as newUserActions from './new-user.actions';
 import cloneDeep from 'lodash.clonedeep';
 import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
+import { User } from 'src/fitness-app-sdk/package/models/users';
 
 export interface newUser {
   email: string;
@@ -26,10 +27,13 @@ export interface UserStateI {
   person: newPerson;
   profilePictureFile: FileData | null;
   isLoggedIn: boolean;
+  personId: number | null;
+  userId: number | null;
 }
 
 export const UserState: UserStateI = {
   user: null,
+  userId: null,
   person: {
     fullName: '',
     age: 0,
@@ -44,10 +48,17 @@ export const UserState: UserStateI = {
   },
   isLoggedIn: false,
   profilePictureFile: null,
+  personId: null,
 };
 
 export const newUserReducer = createReducer(
   UserState,
+  on(newUserActions.getPersonIdSuccess, (state, action) => {
+    return {
+      ...state,
+      personId: action.personId,
+    };
+  }),
   on(newUserActions.SetUser, (state, action) => {
     return {
       ...state,
@@ -104,10 +115,19 @@ export const newUserReducer = createReducer(
     };
   }),
 
-  on(newUserActions.authenticationSuccess, (state) => {
+  on(newUserActions.authenticationSuccess, (state, action) => {
     return {
       ...state,
       isLoggedIn: true,
+      userId: action.userId,
+    };
+  }),
+
+  on(newUserActions.getPersonIdSuccess, (state, action) => {
+    console.log('person id', action.personId);
+    return {
+      ...state,
+      personId: action.personId,
     };
   })
 );

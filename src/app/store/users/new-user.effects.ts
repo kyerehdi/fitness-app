@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as newUserAction from './new-user.actions';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { catchError, from, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { UserStateI } from './new-user.reducer';
 import { State, Store } from '@ngrx/store';
-import { getUser, newUserState } from './new-user.selectors';
+import { getPerson, getUser, newUserState } from './new-user.selectors';
 import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
 import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
 import cloneDeep from 'lodash.clonedeep';
@@ -86,11 +86,23 @@ export class NewUserEffects {
           user.email = action.user.email;
           user.password = action.user.password;
           return this.userService.authenticate(user).pipe(
-            map((token) => {
+            switchMap((token) => {
               localStorage.setItem('token', token);
               this.router.navigate(['workoutTracker']);
               this.secureStorage.setValue('user', JSON.stringify(user));
-              return newUserAction.authenticationSuccess();
+    
+              return this.userService
+                .getUserId(String(user.email), token.token)
+                .pipe(
+                  map((userId) => {
+                  
+                    return newUserAction.authenticationSuccess({ userId });
+                  }),
+                  catchError((err) => {
+                 
+                    return of(newUserAction.authenticationFailure(err));
+                  })
+                );
             }),
             catchError((err) => {
               return of(newUserAction.authenticationFailure({ err }));
@@ -108,37 +120,48 @@ export class NewUserEffects {
     )
   );
 
-  refreshAuthentication$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(newUserAction.refreshAuthentication),
-        map(() => {
-          let newUser: {
-            email: string;
-            password: string;
-          } = {
-            email: '',
-            password: '',
-          };
-          const userString = this.secureStorage.getValue('user');
-          userString.then((value) => {
-            const user = JSON.parse(value);
-            user as {
+  getPersonId$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(newUserAction.authenticationSuccess),
+      withLatestFrom(this.store$.select(newUserState)),
+      switchMap(([action, state]) => {
+        console.log('getPersonId been called')
+        return this.personService
+          .getPersonFromUserId(action.userId)
+          .pipe(
+            map((person) =>{
+            this.secureStorage.setValue('person', JSON.stringify(person));
+             return newUserAction.getPersonIdSuccess({ personId: person.id })
+            }
+              
+            )
+          );
+      })
+    );
+  });
+
+  refreshAuthentication$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(newUserAction.refreshAuthentication),
+      switchMap(() =>
+        from(this.secureStorage.getValue('user')).pipe(
+          map((value) => {
+            const newUser = JSON.parse(value) as {
               email: string;
               password: string;
             };
-            newUser = user;
-
-            this.store$.dispatch(
-              newUserAction.authenticate({
-                user: newUser,
-              })
-            );
-          });
-        })
-      );
-    },
-    { dispatch: false }
+          
+            return newUserAction.authenticate({
+              user: newUser,
+            });
+          }),
+          catchError((error) => {
+            console.error('Error retrieving user from secure storage', error);
+            return of({ type: 'ERROR', error: error });
+          })
+        )
+      )
+    )
   );
 
   constructor(
