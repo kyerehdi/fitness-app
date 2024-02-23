@@ -8,6 +8,8 @@ import * as userHomeActions from '../store/user-home/user-home.action';
 import * as userHomeSelectors from '../store/user-home/user-home.selector';
 import { WorkoutDataService } from '../services/workout-data-service/workout-data.service';
 import { Route, Router } from '@angular/router';
+import { IonicSelectableComponent } from 'ionic-selectable';
+
 @Component({
   selector: 'app-user-home',
   templateUrl: 'user-home.html',
@@ -19,6 +21,8 @@ export class UserHomePage implements OnInit, OnDestroy {
   readonly destroy$ = new Subject<boolean>();
   workoutFiles$ = this.store$.select(userHomeSelectors.getPopularWorkouts);
   quickWorkoutFiles$ = this.store$.select(userHomeSelectors.getQuickWorkouts);
+  searchedWorkouts$ = this.store$.select(userHomeSelectors.searchedWorkouts);
+  isSearching$ = this.store$.select(userHomeSelectors.isSearching);
 
   isLoading$ = this.store$.select(userHomeSelectors.getLoading);
 
@@ -41,7 +45,20 @@ export class UserHomePage implements OnInit, OnDestroy {
   navToWorkoutPage(workoutFile: WorkoutFile) {
     this.workoutDataService.storeWorkoutData(workoutFile);
     this.routeService.navigate(['workoutPage']);
-    
+  }
 
+  handleInput(event: any) {
+    let searchString = event.target.value.trim();
+    searchString.length === 0 ? (searchString = null) : null;
+
+    this.store$.dispatch(
+      userHomeActions.SearchWorkout({
+        searchString: String(event.target.value),
+      })
+    );
+  }
+
+  handleOutsideSearchClick() {
+    this.store$.dispatch(userHomeActions.StopSearching());
   }
 }

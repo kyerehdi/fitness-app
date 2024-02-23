@@ -1,0 +1,5 @@
+<ion-list class="container">
+  <ion-item *ngFor="let workoutFile of workouts" (click) ="onClick(workoutFile)">
+    {{workoutFile.workout.workout_name}}
+  </ion-item>
+</ion-list>

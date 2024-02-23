@@ -5,7 +5,7 @@
   background-color: #161616;
   display: block;
   min-height: 100%;
-  min-width: 100%;
+  width: 100%;
   color: white;
 
   .categories {
@@ -19,7 +19,6 @@
     .category {
       height: 6em;
       width: 6em;
-    
 
       text-align: center;
 
@@ -63,6 +62,23 @@
     margin-right: auto;
   }
 
+  .auto {
+    position: relative;
+    width: 100%;
+  }
+
+  auto-complete {
+    width: 70%;
+    position: absolute;
+    max-height: 200px;
+    display: block;
+    margin-top: -3%;
+    overflow-y: auto;
+    z-index: 999;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
   .search-container {
     display: flex;
 
@@ -98,8 +114,16 @@
       }
 
       .content-tracker {
+        padding-bottom: 1em;
         p {
           margin-top: -0.5em;
+        }
+
+        ion-progress-bar {
+          border-radius: 4px;
+          padding: 3px;
+          --background: #3e3a39;
+          --progress-background: #79d7ff;
         }
       }
     }

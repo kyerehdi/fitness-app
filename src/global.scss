@@ -16,7 +16,7 @@
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import '@ionic/angular/css/display.css';
+@import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
@@ -24,13 +24,17 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600&display=swap");
 
+ion-datetime {
+  --color: rgb(255, 255, 255);
+  --background: #161211;
+  --wheel-highlight-background: #161211;
+}
 
-ion-datetime{
-    --color:rgb(255, 255, 255);
-    --background:#161211;
-    --wheel-highlight-background: #161211;
-    
-
-
+:root {
+  --ion-font-family: "Catamaran", sans-serif;
+  --ion-font-size: 16px;
+  --ion-text-color: #606060;
+  --ion-font-weight: 400;
 }

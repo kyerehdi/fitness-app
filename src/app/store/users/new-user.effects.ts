@@ -88,18 +88,16 @@ export class NewUserEffects {
           return this.userService.authenticate(user).pipe(
             switchMap((token) => {
               localStorage.setItem('token', token);
-              this.router.navigate(['workoutTracker']);
+              this.router.navigate(['user-home']);
               this.secureStorage.setValue('user', JSON.stringify(user));
-    
+
               return this.userService
                 .getUserId(String(user.email), token.token)
                 .pipe(
                   map((userId) => {
-                  
                     return newUserAction.authenticationSuccess({ userId });
                   }),
                   catchError((err) => {
-                 
                     return of(newUserAction.authenticationFailure(err));
                   })
                 );
@@ -125,17 +123,13 @@ export class NewUserEffects {
       ofType(newUserAction.authenticationSuccess),
       withLatestFrom(this.store$.select(newUserState)),
       switchMap(([action, state]) => {
-        console.log('getPersonId been called')
-        return this.personService
-          .getPersonFromUserId(action.userId)
-          .pipe(
-            map((person) =>{
+        console.log('getPersonId been called');
+        return this.personService.getPersonFromUserId(action.userId).pipe(
+          map((person) => {
             this.secureStorage.setValue('person', JSON.stringify(person));
-             return newUserAction.getPersonIdSuccess({ personId: person.id })
-            }
-              
-            )
-          );
+            return newUserAction.getPersonIdSuccess({ personId: person.id });
+          })
+        );
       })
     );
   });
@@ -150,7 +144,7 @@ export class NewUserEffects {
               email: string;
               password: string;
             };
-          
+
             return newUserAction.authenticate({
               user: newUser,
             });

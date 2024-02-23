@@ -5,21 +5,46 @@ import * as userHomeActions from './user-home.action';
 export interface UserHomeStateI {
   quickWorkouts: Array<WorkoutFile>;
   popularWorkouts: Array<WorkoutFile>;
+  searchedWorkouts: Array<WorkoutFile>;
   searchString: string;
   category: string;
   loading: boolean;
+  isSearching: boolean;
 }
 
 export const UserHomeState: UserHomeStateI = {
   quickWorkouts: [],
   popularWorkouts: [],
+  searchedWorkouts: [],
   searchString: '',
   category: '',
   loading: true,
+  isSearching: false,
 };
 
 export const userHomeReducer = createReducer(
   UserHomeState,
+
+  on(userHomeActions.StopSearching, (state, action) => {
+    return {
+      ...state,
+      isSearching: false,
+    };
+  }),
+
+  on(userHomeActions.SearchWorkout, (state, action) => {
+    return {
+      ...state,
+      isSearching: true,
+    };
+  }),
+
+  on(userHomeActions.SearchWorkoutSuccess, (state, action) => {
+    return {
+      ...state,
+      searchedWorkouts: action.workouts,
+    };
+  }),
 
   on(userHomeActions.FetchPopularWorkoutsSuccess, (state, action) => {
     return {

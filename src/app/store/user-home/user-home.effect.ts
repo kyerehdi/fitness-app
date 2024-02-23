@@ -41,6 +41,26 @@ export class UserHomeEffect {
     );
   });
 
+
+  searchWorkout = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userHomeActions.SearchWorkout),
+      switchMap((action) => {
+        return this.workoutService.searchWorkout(action.searchString).pipe(
+          map((workouts) => userHomeActions.SearchWorkoutSuccess({workouts})),
+          catchError((error) => of(userHomeActions.FetchSearchWorkoutFailure({error})))
+        )
+      })
+    )
+  }
+  
+  
+  
+  
+  
+  )
+
+
   constructor(
     private actions$: Actions,
     private workoutService: WorkoutService,

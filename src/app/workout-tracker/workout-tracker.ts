@@ -20,6 +20,8 @@ export class WorkoutTracker implements OnInit {
 
   currentMonth = new Date().getMonth() + 1;
 
+  currentYear = new Date().getFullYear();
+
   getCurrentWorkouts$ = this.store$.select(userWorkoutSelector.getUserWorkouts);
 
   personId: number | null = null;
@@ -69,7 +71,10 @@ export class WorkoutTracker implements OnInit {
     const unformattedDateMonth = unformattedDate.getMonth() + 1;
     const unformattedDateyear = unformattedDate.getFullYear();
     const personId = await this.userService.getPersonId();
-    if (unformattedDateMonth !== this.currentMonth) {
+    if (
+      unformattedDateMonth !== this.currentMonth ||
+      unformattedDateyear !== this.currentYear
+    ) {
       this.currentMonth = unformattedDateMonth;
       this.store$.dispatch(
         GetWorkOutsFromDate({
@@ -81,6 +86,7 @@ export class WorkoutTracker implements OnInit {
     } else {
       this.date = new Date(event.detail.value).toLocaleDateString();
     }
+    this.currentYear = unformattedDateyear;
   }
 
   filterWorkouts() {
@@ -96,7 +102,5 @@ export class WorkoutTracker implements OnInit {
         );
       }),
     ];
-
-    console.log('this is currentWorkouts', this.filterdWorkouts);
   }
 }

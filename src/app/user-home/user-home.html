@@ -14,7 +14,7 @@
         <div class="content-tracker">
           <h1>You've done 3 workouts this week!</h1>
           <p>75% of your weekly goal is completed</p>
-          <ion-progress-bar value=".6" color="secondary"></ion-progress-bar>
+          <ion-progress-bar value=".6"></ion-progress-bar>
         </div>
       </div>
     </div>
@@ -33,13 +33,36 @@
       </ion-segment>
     </ion-row>
 
+    <!-- <ionic-selectable></ionic-selectable> -->
+
     <ng-container *ngIf="!(isLoading$ | async)">
-      <div class="search-container">
-        <div class="search-bar-container">
-          <ion-searchbar color="grey"></ion-searchbar>
+      <div
+        class="auto"
+        clickOutside
+        (clickOutside)="handleOutsideSearchClick()"
+      >
+        <div class="search-container">
+          <div class="search-bar-container">
+            <ion-searchbar
+              color="grey"
+              (ionInput)="handleInput($event)"
+            ></ion-searchbar>
+          </div>
+          <ion-icon name="menu" class="menu-icon"></ion-icon>
         </div>
-        <ion-icon name="menu" class="menu-icon"></ion-icon>
+        <ng-container *ngIf="(isSearching$ | async)">
+          <ng-container
+            *ngIf="(searchedWorkouts$ | async) as searchedWorkouts "
+          >
+            <auto-complete
+              [workouts]="searchedWorkouts"
+              (navEmit)="navToWorkoutPage($event)"
+            >
+            </auto-complete>
+          </ng-container>
+        </ng-container>
       </div>
+
       <h1 style="font-size: 20px; margin-left: 1em">Most popular workouts</h1>
       <div class="workouts" *ngIf="(workoutFiles$ | async) as workoutFiles">
         <workout-card

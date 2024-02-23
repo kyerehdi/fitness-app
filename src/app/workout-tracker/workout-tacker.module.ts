@@ -5,14 +5,13 @@ import { IonicModule } from '@ionic/angular';
 import { WorkoutTracker } from './workout-tracker';
 import { IgxCalendarModule } from 'igniteui-angular';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { WorkoutChipModule } from '../components/workout-chips/workout.chips.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UserWorkoutReducer } from '../store/user-workouts/user-workouts.reducer';
 import { UserWorkouts } from '../store/user-workouts/user-workouts.effectt';
-
 
 const routes: Routes = [
   {

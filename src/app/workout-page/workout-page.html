@@ -1,17 +1,18 @@
 <ion-content [fullscreen]="true">
   <ng-container *ngIf="workoutFile">
     <div class="container">
+      <ion-spinner class="spinner" name="circles" *ngIf="loading"></ion-spinner>
       <div class="header-group">
         <span (click)="navigateBack()"
           ><ion-icon name="arrow-back-outline"></ion-icon
         ></span>
         <h1>{{workoutFile.workout.workout_name}}</h1>
       </div>
-      <div class="workout">
-        <img [src]="workoutFile.gifUrl" alt="" />
+      <div class="workout" [hidden]="loading">
+        <img [src]="workoutFile.gifUrl" alt="" (load)="loading = false" />
       </div>
 
-      <form>
+      <form [hidden]="loading">
         <h1>Add Workout</h1>
         <div class="workout-inputs">
           <div>

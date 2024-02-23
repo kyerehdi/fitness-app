@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 })
 export class WorkoutPage implements OnInit, OnDestroy {
   workoutFile: WorkoutFile = new WorkoutFile();
+  loading: boolean = true;
   constructor(
     private workoutDataService: WorkoutDataService,
     private location: Location

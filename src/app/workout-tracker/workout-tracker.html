@@ -9,13 +9,31 @@
       <div class="workouts">
         <workout-chip
           *ngFor="let workout of filterdWorkouts"
-          [workoutData]="workout.weight + 'kg ' + workout.sets + ' sets ' + workout.reps + ' reps ' + workout.intensity + ' intensity' "
+          [workoutData]="workout.weight + 'kg ' + workout.sets + ' Sets ' + workout.reps + ' Reps ' + workout.intensity + ' Intensity' "
           [workoutTitle]="workout.workout_name"
         >
         </workout-chip>
-
-    
-      
+        <div *ngIf="filterdWorkouts.length ===0">
+          <h1
+            style="
+              display: block;
+              text-align: center;
+              margin-top: 2em;
+              font-size: 16px;
+            "
+          >
+            No Workouts on File
+          </h1>
+          <ion-icon
+            name="alert-circle-outline"
+            style="
+              display: block;
+              text-align: center;
+              width: 99%;
+              font-size: 100px;
+            "
+          ></ion-icon>
+        </div>
       </div>
     </div>
   </div>

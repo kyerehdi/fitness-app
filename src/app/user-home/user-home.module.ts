@@ -9,6 +9,10 @@ import { userHomeReducer } from '../store/user-home/user-home.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserHomeEffect } from '../store/user-home/user-home.effect';
 
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { AutoCompleteModule } from '../components/autocomplete/auto-complete.module';
+import { ClickOutsideDirective } from '../directives/clickout-event/click-outside-event';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,7 +28,10 @@ const routes: Routes = [
     WorkoutCardModule,
     StoreModule.forFeature('userHomeReducer', userHomeReducer),
     EffectsModule.forFeature([UserHomeEffect]),
+    IonicSelectableComponent,
+    AutoCompleteModule,
   ],
-  declarations: [UserHomePage],
+  declarations: [UserHomePage, ClickOutsideDirective],
+  providers: [],
 })
 export class UserHomePageModule {}

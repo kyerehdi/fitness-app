@@ -12,7 +12,6 @@ export class UserWorkouts {
     return this.actions$.pipe(
       ofType(userWorkoutActions.GetWorkOutsFromDate),
       switchMap((action) => {
-        console.log('getting workouts');
         return this.userWorkoutService
           .getWorkoutFromDate(action.year, action.month, action.personId)
           .pipe(
@@ -22,7 +21,6 @@ export class UserWorkouts {
               })
             ),
             catchError((error) => {
-              console.log('eeror occured');
               return of(
                 userWorkoutActions.GetWorkOutsFromDateFailure({ error })
               );
