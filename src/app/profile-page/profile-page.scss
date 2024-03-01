@@ -1,0 +1,162 @@
+.container {
+  --background: #161211;
+  width: 100%;
+
+  .header {
+    border-bottom: 1px solid grey;
+    text-align: center;
+    height: 8%;
+
+    h1 {
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+
+  .profile-picture {
+    // border: red 1px solid;
+    height: 80px;
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    border-radius: 1em;
+
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 1em;
+    }
+  }
+
+  .fitness-header {
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+  }
+
+  .stats {
+    display: flex;
+    height: 15%;
+    width: 85%;
+    border: #282423 10px solid;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5em;
+
+    .stat {
+      width: 35%;
+      height: 100%;
+      //   border: red 1px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .stat-container {
+        h1 {
+          width: 100%;
+          text-align: center;
+          font-size: 13px;
+          color: #fff;
+          margin-bottom: 0em;
+          margin-top: 0em;
+        }
+      }
+    }
+  }
+
+  .description {
+    // border: red 1px solid;
+    height: 40%;
+
+    .description-header {
+      font-size: 13px;
+      color: #fff;
+
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .chip {
+      display: flex;
+      height: 25%;
+      align-items: center;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 5px;
+      background-color: #282423;
+
+      .text-container-type {
+        padding-left: 15px;
+        width: 60%;
+        h1 {
+          display: block;
+          font-size: 16px;
+          color: #f8f8f8;
+          margin-top: 0.5em;
+          margin-bottom: 0px;
+        }
+      }
+
+      .calorie {
+        display: flex;
+        background-color: #79d7ff;
+        height: 60%;
+        width: 20%;
+
+        border-radius: 1em;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        font-size: 20px;
+        color: #030303;
+      }
+
+      .text-container {
+        padding-left: 1em;
+        h1 {
+          display: block;
+
+          font-size: 16px;
+          color: #f8f8f8;
+          margin-top: 0.5em;
+          margin-bottom: 0px;
+        }
+        h2 {
+          margin-top: 0.5em;
+          display: block;
+
+          font-size: 14px;
+          color: #f8f8f8;
+        }
+      }
+
+      img {
+        height: 80%;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        padding-left: 1em;
+        filter: invert(70%) sepia(44%) saturate(461%) hue-rotate(162deg)
+          brightness(102%) contrast(101%);
+        z-index: 99;
+      }
+    }
+  }
+
+  .edit-button {
+    display: block;
+    height: 56px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #79d7ff;
+    // margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 20px;
+    border-radius: 5px;
+  }
+}

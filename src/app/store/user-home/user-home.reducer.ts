@@ -16,7 +16,7 @@ export const UserHomeState: UserHomeStateI = {
   quickWorkouts: [],
   popularWorkouts: [],
   searchedWorkouts: [],
-  searchString: '',
+  searchString: ' ',
   category: '',
   loading: true,
   isSearching: false,
@@ -36,6 +36,7 @@ export const userHomeReducer = createReducer(
     return {
       ...state,
       isSearching: true,
+      searchString: action.searchString,
     };
   }),
 

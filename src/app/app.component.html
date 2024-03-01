@@ -2,16 +2,16 @@
   <ion-router-outlet></ion-router-outlet>
   <ion-tabs *ngIf="isLoggedIn">
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="user-home" routerLink="/user-home">
+      <ion-tab-button tab="user-home" href="/user-home">
         <ion-icon name="home"></ion-icon>
       </ion-tab-button>
-      <ion-tab-button tab="search">
+      <ion-tab-button tab="searchWorkout" href="/searchWorkout">
         <ion-icon name="search"></ion-icon>
       </ion-tab-button>
-      <ion-tab-button tab="workoutTracker" routerLink="/workoutTracker">
+      <ion-tab-button tab="workoutTracker" href="/workoutTracker">
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-tab-button>
-      <ion-tab-button tab="profile">
+      <ion-tab-button tab="profile" (click)="navigate('profile')">
         <ion-icon name="person"></ion-icon>
       </ion-tab-button>
     </ion-tab-bar>

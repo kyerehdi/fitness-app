@@ -6,7 +6,7 @@
         <span (click)="navigateBack()"
           ><ion-icon name="arrow-back-outline"></ion-icon
         ></span>
-        <h1>{{workoutFile.workout.workout_name}}</h1>
+        <h1 class="workout-name">{{workoutFile.workout.workout_name}}</h1>
       </div>
       <div class="workout" [hidden]="loading">
         <img [src]="workoutFile.gifUrl" alt="" (load)="loading = false" />

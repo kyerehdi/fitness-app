@@ -2,7 +2,7 @@
   <div id="container">
     <div class="header-group">
       <div class="header-title-group">
-        <img src=".././../assets/picD.png" class="default-pic" />
+        <img src=".././../assets/prof.jpg" class="default-pic" />
         <div class="greetings">
           <h1>Good Morning,</h1>
           <p>Derrick Kyereh</p>
@@ -20,7 +20,7 @@
     </div>
     <br />
     <ion-row color="primary" class="row">
-      <ion-segment color="primary">
+      <!-- <ion-segment color="primary">
         <ion-segment-button value="t1">
           <ion-label color="light">Discover</ion-label>
         </ion-segment-button>
@@ -30,7 +30,7 @@
         <ion-segment-button value="t3">
           <ion-label color="light">My Plan</ion-label>
         </ion-segment-button>
-      </ion-segment>
+      </ion-segment> -->
     </ion-row>
 
     <!-- <ionic-selectable></ionic-selectable> -->
@@ -91,35 +91,41 @@
 
     <h1 style="font-size: 20px; margin-left: 1em">Categories</h1>
     <div class="categories">
-      <div class="category">
+      <div class="category" (click)="navToSearchResults('Shoulders')">
         <div class="category-img">
           <img src="../../assets/shoulders.svg" />
         </div>
         <p>Shoulders</p>
       </div>
-      <div class="category">
+      <div class="category" (click)="navToSearchResults('Biceps')">
         <div class="category-img">
           <img src="../../assets/bicep-icon.svg" />
         </div>
         <p>Biceps</p>
       </div>
-      <div class="category">
+      <div class="category" (click)="navToSearchResults('Legs')">
         <div class="category-img">
           <img src="../../assets/leg-icon.svg" />
         </div>
         <p>Legs</p>
       </div>
-      <div class="category">
+      <div class="category" (click)="navToSearchResults('Chest')">
         <div class="category-img">
           <img src="../../assets/chest.svg" />
         </div>
         <p>Chest</p>
       </div>
-      <div class="category">
+      <div class="category" (click)="navToSearchResults('Back')">
         <div class="category-img">
           <img src="../../assets/back-icon.svg" />
         </div>
         <p>Back</p>
+      </div>
+      <div class="category" (click)="navToSearchResults('Triceps')">
+        <div class="category-img">
+          <img src="../../assets/tricep-icon.svg" />
+        </div>
+        <p>Triceps</p>
       </div>
     </div>
 

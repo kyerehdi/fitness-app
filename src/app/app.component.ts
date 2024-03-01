@@ -9,6 +9,7 @@ import {
 import { map } from 'rxjs';
 import { UserStateI } from './store/users/new-user.reducer';
 import { State, Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit {
   constructor(
     private authetnicatedUserService: AuthetnicatedUserService,
     private actions: Actions,
-    private userStore: Store<State<UserStateI>>
+    private userStore: Store<State<UserStateI>>,
+    private routeService: Router
   ) {}
   ngOnInit(): void {
     console.log('app is starting');
@@ -35,5 +37,9 @@ export class AppComponent implements OnInit {
       .subscribe();
 
     this.userStore.dispatch(refreshAuthentication());
+  }
+
+  navigate(url: string) {
+    this.routeService.navigate([url]);
   }
 }

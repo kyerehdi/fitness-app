@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true" class="container">
+  <h1 class="header-name">Search</h1>
+  <ion-searchbar
+    [value]="searchString$ |async"
+    (ionInput)="handleInput($event)"
+    placeholder="Search the name or category of the workout"
+  ></ion-searchbar>
+
+  <ng-container
+    *ngIf="(searchedWorkouts$ | async) as searchedWorkouts; elseblock "
+  >
+    <div class="auto-complete-container">
+      <auto-complete
+        [workouts]="searchedWorkouts"
+        (navEmit)="navToWorkoutPage($event)"
+      ></auto-complete>
+    </div>
+
+    <h1 class="nothing-found" *ngIf="searchedWorkouts.length === 0">
+      No workouts found
+    </h1>
+  </ng-container>
+</ion-content>

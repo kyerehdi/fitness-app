@@ -29,7 +29,6 @@ const routes: Routes = [
     path: 'user-home',
     loadChildren: () =>
       import('./user-home/user-home.module').then((m) => m.UserHomePageModule),
-   
   },
   {
     path: 'workoutPage',
@@ -37,7 +36,6 @@ const routes: Routes = [
       import('./workout-page/workout-page.module').then(
         (m) => m.WorkoutPageModule
       ),
-
   },
   {
     path: 'workoutTracker',
@@ -45,8 +43,22 @@ const routes: Routes = [
       import('./workout-tracker/workout-tacker.module').then(
         (m) => m.WorkoutTrackerModule
       ),
-    
   },
+
+  {
+    path: 'searchWorkout',
+    loadChildren: () =>
+      import('./search-workout-page/search.page.module').then(
+        (m) => m.SearchPageModule
+      ),
+  },
+
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile-page/profile-page.module').then(
+      (m) => m.ProfilePageModule
+    )
+  }
 ];
 
 @NgModule({

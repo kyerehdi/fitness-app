@@ -13,6 +13,8 @@ import { Person } from 'src/fitness-app-sdk/package/models/person';
   providedIn: 'root',
 })
 export class AuthetnicatedUserService implements OnDestroy {
+  private userId!: number | null;
+
   getIsUserLoggedIn$ = this.store$.select(getIsLoggedIn);
 
   getPerson$ = this.store$.select(getPersonId);
@@ -64,5 +66,13 @@ export class AuthetnicatedUserService implements OnDestroy {
       return person.id;
     }
     return this.personId;
+  }
+
+  async getUserId(): Promise<number | null> {
+    const personString = await this.secureStoreage.getValue('person');
+
+    const person: Person = JSON.parse(personString);
+
+    return person.userid;
   }
 }

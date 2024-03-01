@@ -1,20 +1,27 @@
 :host {
   --height: auto;
   --width: auto;
+  --background-color: #ffffff;
+  --borderr-color: #fff;
+  --color-type: black;
   // border: 4px orange solid;
   // width: var(--width);
   // width: fit-content;
 
   .container {
     display: block;
+    background-color: var(--background-color);
     // border: red 1px solid;
     // width: var(--width);
     // margin-left: auto;
     // margin-right: auto;
 
     ion-item {
+      
       border-bottom: none;
-      --border-color: #fff;
+      --background: var(--background-color);
+      --border-color: var(--borderr-color);
+      --color: var(--color-type);
     }
   }
 }

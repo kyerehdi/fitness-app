@@ -61,4 +61,11 @@ export class UserHomePage implements OnInit, OnDestroy {
   handleOutsideSearchClick() {
     this.store$.dispatch(userHomeActions.StopSearching());
   }
+
+  navToSearchResults(category: string) {
+    
+    this.routeService.navigate(['searchWorkout'], {
+      queryParams: { searchString: category },
+    });
+  }
 }

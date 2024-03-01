@@ -1,0 +1,33 @@
+import { createReducer, on } from '@ngrx/store';
+import { Person } from 'src/fitness-app-sdk/package/models/person';
+import * as userProfileActions from './user-profile.actions';
+
+export interface UserProfileStateI {
+  person: Person | null;
+  totalExercises: number | null;
+  calorieIntake: number | null;
+  profilePictureSrc: string | null;
+}
+
+export const UserProfileState: UserProfileStateI = {
+  person: null,
+  totalExercises: null,
+  calorieIntake: null,
+  profilePictureSrc: null,
+};
+
+export const UserProfileReducer = createReducer(
+  UserProfileState,
+  on(userProfileActions.FetchPersonSuccess, (state, action) => {
+    return {
+      ...state,
+      person: action.person,
+    };
+  }),
+  on(userProfileActions.FecthPersonProfilePictureSuccess, (state, action) => {
+    return {
+      ...state,
+      profilePictureSrc: String(action.profilePictureSrc),
+    };
+  })
+);
