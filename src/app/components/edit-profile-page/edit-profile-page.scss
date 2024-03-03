@@ -1,0 +1,130 @@
+ion-content {
+  --background: #161211;
+  width: 100%;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+
+    .profile-picture-container {
+      position: relative;
+      .close-btn {
+        position: absolute;
+        font-size: 40px;
+        color: #79d7ff;
+        padding: 10px;
+        top: 0;
+      }
+    }
+
+    .title {
+      color: white;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .profile-picture-section {
+      position: relative;
+      height: 100px;
+      width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 15px;
+      border-radius: 4em;
+    
+      img {
+        width: inherit;
+        height: inherit;
+        object-fit: cover;
+        border-radius: inherit;
+      }
+
+      button {
+        position: absolute;
+
+        background-color: #79d7ff;
+        height: 1em;
+        font-size: 22px;
+        width: 1em;
+        border-radius: 1em;
+        color: black;
+      }
+    }
+
+    form {
+      display: block;
+      box-sizing: border-box;
+      height: fit-content;
+
+      padding: 0.5em;
+      .fields {
+        height: 100%;
+
+        label {
+          width: 90%;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          color: white;
+        }
+
+        .field {
+          color: white;
+          width: 90%;
+          padding-left: 10px;
+          min-height: 50px;
+          border-radius: 5px;
+          border: none;
+          background-color: #282423;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 1em;
+
+          outline: none;
+        }
+
+        ion-select {
+          display: block;
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          --border-color: white;
+          --border-width: 100%;
+          color: white;
+        }
+      }
+    }
+
+    .btn-container {
+      flex-grow: 2;
+      min-height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-color: #161211;
+
+      position: relative;
+      padding-bottom: 5px;
+
+      .save-btn {
+        display: block;
+        height: 60px;
+        width: 90%;
+        border-radius: 10px;
+        font-size: 16px;
+        background-color: #79d7ff;
+        margin-left: auto;
+        margin-right: auto;
+
+
+        &:disabled{
+          opacity: 0.1;
+        }
+      }
+    }
+  }
+}

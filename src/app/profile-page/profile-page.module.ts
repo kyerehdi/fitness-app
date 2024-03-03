@@ -7,6 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { UserProfileReducer } from '../store/user-profile/user-profile.reducer';
 import { UserProfileEffect } from '../store/user-profile/user-profile.effects';
+import { EditProfileModule } from '../components/edit-profile-page/edit-profile-page.module';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     StoreModule.forFeature('UserProfileReducer', UserProfileReducer),
     EffectsModule.forFeature([UserProfileEffect]),
+    EditProfileModule
   ],
 })
 export class ProfilePageModule {}

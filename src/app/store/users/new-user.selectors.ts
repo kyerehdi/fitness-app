@@ -22,3 +22,13 @@ export const getPersonId = createSelector(
   newUserState,
   (state: UserStateI) => state?.personId
 );
+
+export const getPersonProfilePicture = createSelector(
+  newUserState,
+  (state: UserStateI) => state?.profilePictureLink
+);
+
+export const getDaysWorkedOut = createSelector(
+  newUserState,
+  (state: UserStateI) => state?.daysWorkoutThisWeek
+);

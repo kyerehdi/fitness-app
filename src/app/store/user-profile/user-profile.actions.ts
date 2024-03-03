@@ -1,9 +1,8 @@
 import { Action, props, createAction } from '@ngrx/store';
+import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
 import { Person } from 'src/fitness-app-sdk/package/models/person';
 
-export const FetchPerson = createAction(
-  'Fetch Person',
-);
+export const FetchPerson = createAction('Fetch Person');
 
 export const FetchPersonSuccess = createAction(
   'Fetch Person Success',
@@ -29,3 +28,24 @@ export const FetchPersonProfilePictureFailure = createAction(
   'Fetch Person Profile Picture Failure',
   props<{ error: any }>()
 );
+
+export const UpdatePerson = createAction(
+  'Update Person',
+  props<{ person: Person }>()
+);
+
+export const UpdatePersonSuccess = createAction('Update Person Success');
+
+
+export const UpdatePersonFailure = createAction('Failure to create Person',
+props<{error: any}>())
+
+export const UpdateUserProfilePicture = createAction(
+  "Update User's Profile Picture",
+  props<{ profilePicture: FileData; filename: string }>()
+);
+
+
+
+
+

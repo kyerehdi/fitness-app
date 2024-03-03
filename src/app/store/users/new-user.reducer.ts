@@ -29,6 +29,8 @@ export interface UserStateI {
   isLoggedIn: boolean;
   personId: number | null;
   userId: number | null;
+  profilePictureLink: string | null;
+  daysWorkoutThisWeek: number | null;
 }
 
 export const UserState: UserStateI = {
@@ -49,10 +51,27 @@ export const UserState: UserStateI = {
   isLoggedIn: false,
   profilePictureFile: null,
   personId: null,
+  profilePictureLink: null,
+  daysWorkoutThisWeek: null,
 };
 
 export const newUserReducer = createReducer(
   UserState,
+
+  on(newUserActions.getDaysWorkedOutSuccess, (state, action) => {
+    console.log(action.workoutNumber);
+    return {
+      ...state,
+      daysWorkoutThisWeek: action.workoutNumber,
+    };
+  }),
+
+  on(newUserActions.getPersonProfilePictureSuccess, (state, action) => {
+    return {
+      ...state,
+      profilePictureLink: action.profilePictureSrc,
+    };
+  }),
   on(newUserActions.getPersonIdSuccess, (state, action) => {
     return {
       ...state,

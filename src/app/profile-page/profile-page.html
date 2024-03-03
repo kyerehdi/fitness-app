@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" class="container">
+<ion-content [fullscreen]="true" class="container" *ngIf="!isEditing">
   <div class="header">
     <h1>Fitness Profile</h1>
   </div>
@@ -23,14 +23,14 @@
   <div class="stats">
     <div class="stat">
       <div class="stat-container">
-        <h1 class="stat-number">120</h1>
+        <h1 class="stat-number">{{(getPerson$ |async)?.weight}}</h1>
         <h1>Current weight (kg)</h1>
       </div>
     </div>
 
     <div class="stat">
       <div class="stat-container">
-        <h1 class="stat-number">170</h1>
+        <h1 class="stat-number">{{(getPerson$ |async)?.height}}</h1>
         <h1>Height (cm)</h1>
       </div>
     </div>
@@ -62,4 +62,11 @@
     </div>
   </div>
   <button class="edit-button" (click)="editClick()">Edit Profile</button>
+</ion-content>
+<ion-content *ngIf="isEditing" [fullscreen]="true">
+  <ng-container *ngIf="getPerson$ |async as person">
+    <edit-profile-page [person]="person" [orginalProfilePicture]="getUserProfilePicture$ | async" (closeComponenent)="close($event)"
+    (submitEdit)="handlePersonSubmission($event)">
+    </edit-profile-page>
+  </ng-container>
 </ion-content>

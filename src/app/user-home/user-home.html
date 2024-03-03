@@ -2,38 +2,28 @@
   <div id="container">
     <div class="header-group">
       <div class="header-title-group">
-        <img src=".././../assets/prof.jpg" class="default-pic" />
-        <div class="greetings">
-          <h1>Good Morning,</h1>
-          <p>Derrick Kyereh</p>
+        <div class="text-pic">
+          <span class="default-pic"
+            ><img [src]="profilePicture$ | async" alt=""
+          /></span>
+          <div class="greetings">
+            <h1>Good Morning,</h1>
+            <p>Victor Gonzalez</p>
+          </div>
         </div>
         <ion-icon name="notifications" class="notification-icon"></ion-icon>
       </div>
 
       <div class="workout-tracker">
         <div class="content-tracker">
-          <h1>You've done 3 workouts this week!</h1>
-          <p>75% of your weekly goal is completed</p>
-          <ion-progress-bar value=".6"></ion-progress-bar>
+          <h1>You've done {{workouts}} workouts this week!</h1>
+          <p>{{workouts/7}}% of days worked out this week</p>
+          <ion-progress-bar [value]="workouts/7"></ion-progress-bar>
         </div>
       </div>
     </div>
     <br />
-    <ion-row color="primary" class="row">
-      <!-- <ion-segment color="primary">
-        <ion-segment-button value="t1">
-          <ion-label color="light">Discover</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="t2">
-          <ion-label color="light">Trainers</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="t3">
-          <ion-label color="light">My Plan</ion-label>
-        </ion-segment-button>
-      </ion-segment> -->
-    </ion-row>
-
-    <!-- <ionic-selectable></ionic-selectable> -->
+    <ion-row color="primary" class="row"> </ion-row>
 
     <ng-container *ngIf="!(isLoading$ | async)">
       <div
@@ -85,6 +75,7 @@
           [src]="workoutFile.gifUrl"
           [name]="workoutFile.workout.workout_name"
           [bodyCategory]="workoutFile.workout.major_muscle_group"
+          (iconClicked)="navToWorkoutPage(workoutFile)"
         ></workout-card>
       </div>
     </ng-container>

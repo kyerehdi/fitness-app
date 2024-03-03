@@ -9,6 +9,12 @@ import * as userHomeSelectors from '../store/user-home/user-home.selector';
 import { WorkoutDataService } from '../services/workout-data-service/workout-data.service';
 import { Route, Router } from '@angular/router';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { UserStateI } from '../store/users/new-user.reducer';
+import {
+  getDaysWorkedOut,
+  getPersonProfilePicture,
+} from '../store/users/new-user.selectors';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user-home',
@@ -26,15 +32,26 @@ export class UserHomePage implements OnInit, OnDestroy {
 
   isLoading$ = this.store$.select(userHomeSelectors.getLoading);
 
+  profilePicture$ = this.userStore$.select(getPersonProfilePicture);
+
+  getDaysWorkout$ = this.userStore$.select(getDaysWorkedOut);
+
+  workouts: number = 0;
+
   constructor(
     private workoutDataService: WorkoutDataService,
     private workoutService: WorkoutService,
     private routeService: Router,
-    private store$: Store<State<UserHomeStateI>>
+    private store$: Store<State<UserHomeStateI>>,
+    private userStore$: Store<State<UserStateI>>
   ) {}
 
   ngOnInit(): void {
     this.store$.dispatch(userHomeActions.FetchPopularWorkouts());
+
+    this.getDaysWorkout$
+      .pipe(map((numbers) => (this.workouts = Number(numbers))))
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -63,7 +80,6 @@ export class UserHomePage implements OnInit, OnDestroy {
   }
 
   navToSearchResults(category: string) {
-    
     this.routeService.navigate(['searchWorkout'], {
       queryParams: { searchString: category },
     });

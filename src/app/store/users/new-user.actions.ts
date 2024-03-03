@@ -95,3 +95,23 @@ export const getPersonIdSuccess = createAction(
 export const getPersonIdFailure = createAction(
   'Person Id has not been retrieved'
 );
+
+export const getPersonProfilePictureSuccess = createAction(
+  'Person profilePicture has been fetched succesfully',
+  props<{ profilePictureSrc: string }>()
+);
+
+export const getPersonProfilePictureFailure = createAction(
+  'Person ProfilePicuter has not been succefully captured',
+  props<{ error: any }>()
+);
+
+export const getDaysWorkedOutSuccess = createAction(
+  'Fetching Days worked out this week',
+  props<{ workoutNumber: number }>()
+);
+
+export const getDaysWorkedOutFailure = createAction(
+  'Fetching Days worked out this week has not been succefully captured',
+  props<{ error: any }>()
+);

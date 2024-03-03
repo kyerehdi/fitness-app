@@ -42,3 +42,4 @@ export const FetchSearchWorkoutFailure = createAction(
 );
 
 export const StopSearching = createAction('Stop Searching');
+

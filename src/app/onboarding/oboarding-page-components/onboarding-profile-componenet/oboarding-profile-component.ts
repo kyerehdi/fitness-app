@@ -85,7 +85,6 @@ export class OnboardingProfileComponent implements OnInit {
 
         this.profilePicture = cloneDeep(selectedImage);
 
-
     }
 
     

@@ -15,17 +15,18 @@
 
   .profile-picture {
     // border: red 1px solid;
-    height: 80px;
-    width: 80px;
+    height: 100px;
+    width: 100px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-    border-radius: 1em;
+    border-radius: 100000px;
 
     img {
       height: 100%;
       width: 100%;
-      border-radius: 1em;
+      object-fit: cover;
+      border-radius: inherit;
     }
   }
 

@@ -13,7 +13,7 @@
     width: 90%;
     overflow-x: scroll;
     padding-bottom: 1.5em;
-    gap: .5em;
+    gap: 0.5em;
     margin-left: auto;
     margin-right: auto;
 
@@ -29,6 +29,7 @@
 
         img {
           padding: 1em;
+
           display: block;
           height: 100%;
           margin-left: auto;
@@ -96,9 +97,7 @@
     }
   }
 
-  // min-height: 100%;
   .header-group {
-    // border: white 1px solid;
     height: 30%;
 
     .workout-tracker {
@@ -134,20 +133,34 @@
       padding-left: 1.5em;
       padding-right: 1.5em;
       height: 40%;
-      //   border: white 1px solid;
+
       display: flex;
       color: white;
-      justify-content: center;
+
       align-items: center;
+
+      .text-pic {
+        display: flex;
+        width: 75%;
+        align-items: center;
+        gap: 1em;
+      }
 
       .default-pic {
         border-radius: 3em;
-        height: 3em;
-        margin-right: 1em;
+        height: 58px;
+        width: 58px;
+        img {
+          width: 100%;
+          max-height: 100%;
+          object-fit: cover;
+          border-radius: inherit;
+        }
       }
 
       .notification-icon {
         font-size: 30px;
+        margin-left: 15%;
       }
 
       .greetings {

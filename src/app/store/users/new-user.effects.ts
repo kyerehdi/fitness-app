@@ -12,6 +12,9 @@ import { AlertController } from '@ionic/angular';
 import { User } from 'src/fitness-app-sdk/package/models/users';
 import { Router } from '@angular/router';
 import { SecureStorage } from 'src/app/services/secureStorage/secure-storage';
+import * as moment from 'moment';
+import { UserWorkoutService } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
+import { WorkoutNumber } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
 
 @Injectable()
 export class NewUserEffects {
@@ -134,6 +137,32 @@ export class NewUserEffects {
     );
   });
 
+  getPersonProfilePictureSrc$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(newUserAction.authenticationSuccess),
+      withLatestFrom(this.store$.select(newUserState)),
+      switchMap(([_, state]) => {
+        if (state?.userId) {
+          return this.personService.getPersonProfilePicture(state.userId).pipe(
+            map((profilePictureSrc) =>
+              newUserAction.getPersonProfilePictureSuccess({
+                profilePictureSrc: profilePictureSrc.link,
+              })
+            )
+          );
+        } else {
+          return of(
+            newUserAction.getPersonProfilePictureFailure({
+              error: {
+                message: "Could not fetch User's Profile picture",
+              },
+            })
+          );
+        }
+      })
+    );
+  });
+
   refreshAuthentication$ = createEffect(() =>
     this.actions$.pipe(
       ofType(newUserAction.refreshAuthentication),
@@ -158,12 +187,37 @@ export class NewUserEffects {
     )
   );
 
+  getDaysWorkedOut$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(newUserAction.getPersonIdSuccess),
+      switchMap((action) => {
+        const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
+        const endOfWeek = moment().endOf('week').format('YYYY-MM-DD');
+        return this.userWorkoutService
+          .getTotalUserWorkoutsFromDate(startOfWeek, endOfWeek, action.personId)
+          .pipe(
+            map((workoutNumber: WorkoutNumber) => {
+              console.log(workoutNumber);
+              console.log(
+                'effect',
+                workoutNumber.numberOfDaysWorkedOutThisWeek
+              );
+              return newUserAction.getDaysWorkedOutSuccess({
+                workoutNumber: workoutNumber.numberOfDaysWorkedOutThisWeek,
+              });
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store$: Store<State<UserStateI>>,
     private userService: UserService,
     private personService: PersonService,
     private router: Router,
-    private secureStorage: SecureStorage
+    private secureStorage: SecureStorage,
+    private userWorkoutService: UserWorkoutService
   ) {}
 }

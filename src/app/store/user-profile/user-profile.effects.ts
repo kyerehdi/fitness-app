@@ -63,6 +63,20 @@ export class UserProfileEffect {
     );
   });
 
+  updatePerson$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userProfileActions.UpdatePerson),
+      switchMap((action) =>
+        this.personService.updatePerson(action.person).pipe(
+          map(() => userProfileActions.FetchPerson()),
+          catchError((error) =>
+            of(userProfileActions.UpdatePersonFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private authenticatedUserService: AuthetnicatedUserService,

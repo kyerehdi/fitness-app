@@ -1,0 +1,77 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <div class="profile-picture-container">
+      <div class="title">
+        <h1>Edit Profile</h1>
+      </div>
+      <div class="profile-picture-section" (click)="addProfilePicture()">
+        <img
+          [src]="orginalProfilePicture"
+          *ngIf="!userProfilePicture"
+        />
+        <img [src]="userProfilePicture" *ngIf="userProfilePicture" />
+        <button>+</button>
+      </div>
+      <ion-icon
+        name="close-outline"
+        class="close-btn"
+        (click)="handleOnCloseButtonClicked($event)"
+      ></ion-icon>
+    </div>
+
+    <form [formGroup]="editForm">
+      <div class="fields">
+        <label for="fullname">FullName </label>
+        <input
+          class="field"
+          id="fullname"
+          placeholder="Full name"
+          formControlName="fullName"
+        />
+        <label for="age">Age</label>
+        <input
+          id="age"
+          class="field"
+          placeholder="Age"
+          type="number"
+          formControlName="age"
+        />
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          id="phoneNumber"
+          class="field"
+          placeholder="Phone number"
+          formControlName="phoneNumber"
+          type="number"
+        />
+        <label for="currentWeight">Current Weight (kg)</label>
+        <input
+          id="currentWeight"
+          class="field"
+          placeholder="Current weight (kg)"
+          formControlName="currentWeight"
+          type="number"
+        />
+        <label for="height">Height (cm)</label>
+        <input
+          class="field"
+          id="height"
+          placeholder="Height (cm)"
+          type="number"
+          formControlName="height"
+        />
+        <label for="intensity">Goal</label>
+        <ion-select placeholder="Goal" formControlName="goal">
+          <ion-select-option value="Gain Muscles"
+            >Gain Muscles</ion-select-option
+          >
+          <ion-select-option value="Get Fitter">Get Fitter</ion-select-option>
+          <ion-select-option value="Lose Weight">Lose Weight</ion-select-option>
+        </ion-select>
+      </div>
+    </form>
+    <div class="btn-container">
+      <button class="save-btn" [disabled]="editForm.invalid" (click)="handleOnSubmit()">Save Changes</button>
+    </div>
+  </div>
+</ion-content>
