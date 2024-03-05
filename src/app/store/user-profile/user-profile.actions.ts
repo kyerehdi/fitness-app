@@ -34,18 +34,26 @@ export const UpdatePerson = createAction(
   props<{ person: Person }>()
 );
 
-export const UpdatePersonSuccess = createAction('Update Person Success');
+export const UpdatePersonSuccess = createAction(
+  'Update Person Success',
+  props<{ person: Person }>()
+);
 
-
-export const UpdatePersonFailure = createAction('Failure to create Person',
-props<{error: any}>())
+export const UpdatePersonFailure = createAction(
+  'Failure to create Person',
+  props<{ error: any }>()
+);
 
 export const UpdateUserProfilePicture = createAction(
   "Update User's Profile Picture",
   props<{ profilePicture: FileData; filename: string }>()
 );
 
+export const UpdateUserProfilePictureSuccess = createAction(
+  "Update User's Profile Picture Success",
+  props<{ link: string }>()
+);
 
-
-
-
+export const UpdateUserProfilePictureFailure = createAction(
+  'Update Profile Picture failure'
+);

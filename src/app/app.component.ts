@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthetnicatedUserService } from './services/authenticated-user/authenticated-user.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 import { Actions, ofType } from '@ngrx/effects';
 import {
   authenticationSuccess,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     private authetnicatedUserService: AuthetnicatedUserService,
     private actions: Actions,
     private userStore: Store<State<UserStateI>>,
-    private routeService: Router
+    private navCtrl: NavController
   ) {}
   ngOnInit(): void {
     console.log('app is starting');
@@ -36,10 +36,12 @@ export class AppComponent implements OnInit {
       )
       .subscribe();
 
+      
+
     this.userStore.dispatch(refreshAuthentication());
   }
 
   navigate(url: string) {
-    this.routeService.navigate([url]);
+    this.navCtrl.navigateForward(url);
   }
 }

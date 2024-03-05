@@ -58,6 +58,13 @@ export const UserState: UserStateI = {
 export const newUserReducer = createReducer(
   UserState,
 
+  on(newUserActions.rehydatePersonProfilePicture, (state, action) => {
+    return {
+      ...state,
+      profilePictureLink: action.str,
+    };
+  }),
+
   on(newUserActions.getDaysWorkedOutSuccess, (state, action) => {
     console.log(action.workoutNumber);
     return {

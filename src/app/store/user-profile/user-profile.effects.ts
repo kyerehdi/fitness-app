@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as userProfileActions from './user-profile.actions';
-import { catchError, from, map, of, switchMap } from 'rxjs';
+import { catchError, from, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
 import { AuthetnicatedUserService } from 'src/app/services/authenticated-user/authenticated-user.service';
+import { UserProfileStateI } from './user-profile.reducer';
+import { State, Store, select } from '@ngrx/store';
+import { UserProfileState } from './user-profile.selector';
 
 @Injectable()
 export class UserProfileEffect {
@@ -42,20 +45,33 @@ export class UserProfileEffect {
     return this.actions$.pipe(
       ofType(userProfileActions.FetchPersonSuccess),
       switchMap((action) => {
-        console.log('effect hit');
-        return this.personService
-          .getPersonProfilePicture(action.person.userid)
-          .pipe(
-            map((profilePictureSrc) => {
-              console.log(profilePictureSrc);
-              return userProfileActions.FecthPersonProfilePictureSuccess({
-                profilePictureSrc: profilePictureSrc.link,
-              });
-            }),
-            catchError((error) =>
-              of(userProfileActions.FetchPersonProfilePictureFailure({ error }))
-            )
+        if (action.person !== null) {
+          console.log('fetchPersonProfilePic got hit');
+          return this.personService
+            .getPersonProfilePicture(action.person?.userid)
+            .pipe(
+              map((profilePictureSrc) => {
+                console.log(profilePictureSrc);
+                return userProfileActions.FecthPersonProfilePictureSuccess({
+                  profilePictureSrc:
+                    profilePictureSrc.format + profilePictureSrc.base64String,
+                });
+              }),
+              catchError((error) =>
+                of(
+                  userProfileActions.FetchPersonProfilePictureFailure({ error })
+                )
+              )
+            );
+        } else {
+          return of(
+            userProfileActions.FetchPersonProfilePictureFailure({
+              error: {
+                message: 'person does not exist',
+              },
+            })
           );
+        }
       }),
       catchError((error) =>
         of(userProfileActions.FetchPersonProfilePictureFailure({ error }))
@@ -68,7 +84,9 @@ export class UserProfileEffect {
       ofType(userProfileActions.UpdatePerson),
       switchMap((action) =>
         this.personService.updatePerson(action.person).pipe(
-          map(() => userProfileActions.FetchPerson()),
+          map(() =>
+            userProfileActions.UpdatePersonSuccess({ person: action.person })
+          ),
           catchError((error) =>
             of(userProfileActions.UpdatePersonFailure({ error }))
           )
@@ -77,9 +95,79 @@ export class UserProfileEffect {
     );
   });
 
+  // rehydate$ = createEffect(
+  //   () => {
+  //     return this.actions$.pipe(
+  //       ofType(userProfileActions.UpdatePersonSuccess),
+  //       map(() => location.reload())
+  //     );
+  //   },
+  //   { dispatch: false }
+  // );
+
+  // updateProfilePicture$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(userProfileActions.UpdateUserProfilePicture),
+  //     withLatestFrom(this.store$.select(UserProfileState)),
+  //     switchMap(([actions, state]) => {
+  //       return this.personService
+  //         .uploadProfilePicture(actions.profilePicture, actions.filename)
+  //         .pipe(
+  //           switchMap(() =>
+  //             this.personService
+  //               .getPersonProfilePicture(Number(state.person?.userid))
+  //               .pipe(
+  //                 map((profilePicutre) => {
+  //                   console.log(
+  //                     'this is effecte getting hit agian',
+  //                     profilePicutre
+  //                   );
+  //                   return userProfileActions.UpdateUserProfilePictureSuccess({
+  //                     link: `${profilePicutre}?v=${new Date().getTime()}`,
+  //                   });
+  //                 })
+  //               )
+  //           ),
+  //           catchError(() =>
+  //             of(userProfileActions.UpdateUserProfilePictureFailure())
+  //           )
+  //         );
+  //     })
+  //   );
+  // });
+
+  updateProfilePicture$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userProfileActions.UpdateUserProfilePicture),
+      withLatestFrom(this.store$.pipe(select(UserProfileState))),
+      switchMap(([action, state]) => {
+        return this.personService
+          .uploadProfilePicture(action.profilePicture, action.filename)
+          .pipe(
+            map((fileData) => {
+              if (state.person !== null) {
+                console.log('profile updated');
+                return userProfileActions.UpdateUserProfilePictureSuccess({
+                  link: fileData.format + fileData.base64String,
+                });
+              } else {
+                return userProfileActions.FetchPersonFailure({
+                  error: { message: 'Fail' },
+                });
+              }
+            }),
+            catchError((error) =>
+              of(userProfileActions.FetchPersonProfilePictureFailure({ error }))
+            )
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private authenticatedUserService: AuthetnicatedUserService,
-    private personService: PersonService
+    private personService: PersonService,
+    private store$: Store<State<UserProfileStateI>>
   ) {}
 }

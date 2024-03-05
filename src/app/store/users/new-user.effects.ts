@@ -15,6 +15,7 @@ import { SecureStorage } from 'src/app/services/secureStorage/secure-storage';
 import * as moment from 'moment';
 import { UserWorkoutService } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
 import { WorkoutNumber } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
+import { UpdateUserProfilePictureSuccess } from '../user-profile/user-profile.actions';
 
 @Injectable()
 export class NewUserEffects {
@@ -126,7 +127,6 @@ export class NewUserEffects {
       ofType(newUserAction.authenticationSuccess),
       withLatestFrom(this.store$.select(newUserState)),
       switchMap(([action, state]) => {
-        console.log('getPersonId been called');
         return this.personService.getPersonFromUserId(action.userId).pipe(
           map((person) => {
             this.secureStorage.setValue('person', JSON.stringify(person));
@@ -146,7 +146,8 @@ export class NewUserEffects {
           return this.personService.getPersonProfilePicture(state.userId).pipe(
             map((profilePictureSrc) =>
               newUserAction.getPersonProfilePictureSuccess({
-                profilePictureSrc: profilePictureSrc.link,
+                profilePictureSrc:
+                  profilePictureSrc.format + profilePictureSrc.base64String,
               })
             )
           );
@@ -207,6 +208,15 @@ export class NewUserEffects {
               });
             })
           );
+      })
+    );
+  });
+
+  rehydrateProfilePicture$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UpdateUserProfilePictureSuccess),
+      map((action) => {
+        return newUserAction.rehydatePersonProfilePicture({ str: action.link });
       })
     );
   });

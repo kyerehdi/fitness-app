@@ -115,3 +115,8 @@ export const getDaysWorkedOutFailure = createAction(
   'Fetching Days worked out this week has not been succefully captured',
   props<{ error: any }>()
 );
+
+export const rehydatePersonProfilePicture = createAction(
+  'Rehydrate Person Profile Picture',
+  props<{ str: string }>()
+);

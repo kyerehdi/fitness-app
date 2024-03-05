@@ -4,18 +4,18 @@
   </div>
 
   <div class="profile-picture">
-    <ng-container
+    <!-- <ng-container
       *ngIf="getUserProfilePicture$ | async as userProfilePicture"
       ;
       else
       elseBlock
-    >
-      <img [src]="userProfilePicture" />
-    </ng-container>
+    > -->
+    <img [src]="getUserProfilePicture$ | async" />
+    <!-- </ng-container> -->
 
-    <ng-template #elseBlock>
+    <!-- <ng-template #elseBlock>
       <img src="../../assets/prof.jpg" alt="" />
-    </ng-template>
+    </ng-template> -->
   </div>
 
   <h1 class="fitness-header">Your Fitness Profile</h1>
@@ -46,11 +46,27 @@
   <div class="description">
     <h1 class="description-header">Goal</h1>
     <div class="chip">
-      <img src="../../assets/heart.svg" alt="heart-icon" />
-      <div class="text-container">
-        <h1>Get Fitter</h1>
-        <h2>Tone up & feel healthy</h2>
-      </div>
+      <ng-container *ngIf="(getPerson$ |async)?.goal === 'Get Fitter'">
+        <img src="../../assets/heart.svg" alt="heart-icon" />
+        <div class="text-container">
+          <h1>Get Fitter</h1>
+          <h2>Tone up & feel healthy</h2>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(getPerson$ |async)?.goal === 'Gain Muscles'">
+        <img src="../../assets/dumbbell.svg" alt="heart-icon" />
+        <div class="text-container">
+          <h1>Gain Muscles</h1>
+          <h2>Build mass & strength</h2>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(getPerson$ |async)?.goal === 'Lose Weight'">
+        <img src="../../assets/fire.svg" alt="heart-icon" />
+        <div class="text-container">
+          <h1>Lose Weight</h1>
+          <h2>Burn fat & get lean</h2>
+        </div>
+      </ng-container>
     </div>
     <h1 class="description-header">Calorie Intake Goal</h1>
     <div class="chip">
@@ -65,8 +81,13 @@
 </ion-content>
 <ion-content *ngIf="isEditing" [fullscreen]="true">
   <ng-container *ngIf="getPerson$ |async as person">
-    <edit-profile-page [person]="person" [orginalProfilePicture]="getUserProfilePicture$ | async" (closeComponenent)="close($event)"
-    (submitEdit)="handlePersonSubmission($event)">
+    <edit-profile-page
+      [person]="person"
+      [orginalProfilePicture]="getUserProfilePicture$ | async"
+      (closeComponenent)="close($event)"
+      (submitNewPhoto)="handlePhotoSubmission($event)"
+      (submitEdit)="handlePersonSubmission($event)"
+    >
     </edit-profile-page>
   </ng-container>
 </ion-content>

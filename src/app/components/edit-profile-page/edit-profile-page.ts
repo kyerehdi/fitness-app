@@ -6,7 +6,6 @@ import { PhotoServiceService } from 'src/app/services/photo-service.service';
 import { FileData } from 'src/fitness-app-sdk/package/models/fileData';
 import { Person } from 'src/fitness-app-sdk/package/models/person';
 
-
 @Component({
   selector: 'edit-profile-page',
   templateUrl: 'edit-profile-page.html',
@@ -34,7 +33,7 @@ export class EditProfilePage implements OnInit {
   submitEdit = new EventEmitter<Person>();
 
   @Output()
-  submitNewPhoto = new EventEmitter<FileData>();
+  submitNewPhoto = new EventEmitter();
 
   constructor(
     private _sanitizer: DomSanitizer,
@@ -85,8 +84,11 @@ export class EditProfilePage implements OnInit {
     newPerson.goal = this.editForm.get('goal')?.value;
     newPerson.profilePictureFileName = newPerson.email + newPerson.userid;
 
-    this.userProfilePicture
-      ? this.submitNewPhoto.emit(this.profilePicture)
+    this.profilePicture
+      ? this.submitNewPhoto.emit({
+          photo: this.profilePicture,
+          fileName: newPerson.profilePictureFileName,
+        })
       : null;
     this.submitEdit.emit(newPerson);
   }
