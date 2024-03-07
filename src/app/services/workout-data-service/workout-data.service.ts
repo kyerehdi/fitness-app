@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { WorkoutFile } from 'src/fitness-app-sdk/package/models/workoutFile';
 
@@ -9,7 +10,12 @@ export class WorkoutDataService {
 
   private workoutSearchString: string = '';
 
-  constructor() {}
+  constructor(private location: Location) {
+    // this.location.onUrlChange(() => {
+    //   // this.workoutFile = null;
+    //   this.workoutSearchString = '';
+    // });
+  }
 
   storeWorkoutData(newWorkoutFile: WorkoutFile) {
     this.workoutFile = newWorkoutFile;

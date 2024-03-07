@@ -28,6 +28,10 @@ export class ProfilePage implements OnInit {
 
   isEditing: boolean = false;
 
+  recomendedCalroieIntake: number = 0;
+
+  imagesLoaded: boolean = false
+
   constructor(
     private authenticatedUserService: AuthetnicatedUserService,
     private store$: Store<State<UserProfileStateI>>,
@@ -38,22 +42,24 @@ export class ProfilePage implements OnInit {
 
   ngOnInit(): void {
     this.store$.dispatch(userProfileActions.FetchPerson());
-    // this.getUserProfilePicture$
-    //   .pipe(
-    //     map((profilePicture) => {
-    //       console.log('this is profilePicture', profilePicture);
-    //       // this.profilePic = profilePicture;
-    //       this.userProfilePicture = true;
-    //     })
-    //   )
-    //   .subscribe();
-    // console.log('this is store', this.store$);
+    this.getPerson$
+      .pipe(
+        map((person) => {
+          if (person) {
+            this.recomendedCalroieIntake = this.calculateCalorieIntake(
+              person.goal,
+              person
+            );
+          }
+        })
+      )
+      .subscribe();
   }
 
   editClick() {
     this.isEditing = true;
 
-    console.log(' button worked');
+    
   }
 
   close($event: any) {
@@ -76,5 +82,41 @@ export class ProfilePage implements OnInit {
   handlePersonSubmission(person: Person) {
     this.store$.dispatch(userProfileActions.UpdatePerson({ person }));
     this.isEditing = false;
+
+  }
+
+  calculateCalorieIntake(goal: string, person: Person) {
+    if (goal === 'Get Fitter') {
+      if (person.gender === 'male') {
+        return (this.recomendedCalroieIntake =
+          (10 * person.weight + 6.25 * person.height - 5 * person.age + 5) *
+          1.55);
+      }
+      return (this.recomendedCalroieIntake =
+        (10 * person.weight + 6.25 * person.height - 5 * person.age - 161) *
+        1.55);
+    } else if (goal === 'Gain Muscles') {
+      if (person.gender === 'male') {
+        return (this.recomendedCalroieIntake =
+          (10 * person.weight + 6.25 * person.height - 5 * person.age + 5) *
+            1.55 +
+          500);
+      }
+      return (this.recomendedCalroieIntake =
+        (10 * person.weight + 6.25 * person.height - 5 * person.age - 161) *
+          1.55 +
+        500);
+    } else {
+      if (person.gender === 'male') {
+        return (this.recomendedCalroieIntake =
+          (10 * person.weight + 6.25 * person.height - 5 * person.age + 5) *
+            1.55 -
+          500);
+      }
+      return (this.recomendedCalroieIntake =
+        (10 * person.weight + 6.25 * person.height - 5 * person.age - 161) *
+          1.55 -
+        500);
+    }
   }
 }

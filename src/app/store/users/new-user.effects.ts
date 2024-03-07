@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { UserWorkoutService } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
 import { WorkoutNumber } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
 import { UpdateUserProfilePictureSuccess } from '../user-profile/user-profile.actions';
+import { LogoutService } from 'src/app/services/logout-service/logout-service';
 
 @Injectable()
 export class NewUserEffects {
@@ -198,11 +199,6 @@ export class NewUserEffects {
           .getTotalUserWorkoutsFromDate(startOfWeek, endOfWeek, action.personId)
           .pipe(
             map((workoutNumber: WorkoutNumber) => {
-              console.log(workoutNumber);
-              console.log(
-                'effect',
-                workoutNumber.numberOfDaysWorkedOutThisWeek
-              );
               return newUserAction.getDaysWorkedOutSuccess({
                 workoutNumber: workoutNumber.numberOfDaysWorkedOutThisWeek,
               });
@@ -221,6 +217,17 @@ export class NewUserEffects {
     );
   });
 
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(newUserAction.logOut),
+      switchMap(() => {
+        return of(this.logoutService.logout()).pipe(
+          map(() => newUserAction.logOutSuccess())
+        );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store$: Store<State<UserStateI>>,
@@ -228,6 +235,7 @@ export class NewUserEffects {
     private personService: PersonService,
     private router: Router,
     private secureStorage: SecureStorage,
-    private userWorkoutService: UserWorkoutService
+    private userWorkoutService: UserWorkoutService,
+    private logoutService: LogoutService
   ) {}
 }

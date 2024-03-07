@@ -10,6 +10,7 @@ import { map } from 'rxjs';
 import { UserStateI } from './store/users/new-user.reducer';
 import { State, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authetnicatedUserService: AuthetnicatedUserService,
+    private location: Location,
     private actions: Actions,
     private userStore: Store<State<UserStateI>>,
     private navCtrl: NavController
@@ -36,12 +38,11 @@ export class AppComponent implements OnInit {
       )
       .subscribe();
 
-      
-
     this.userStore.dispatch(refreshAuthentication());
   }
 
   navigate(url: string) {
-    this.navCtrl.navigateForward(url);
+   
+    this.navCtrl.navigateRoot(url);
   }
 }

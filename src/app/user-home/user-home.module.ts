@@ -12,12 +12,16 @@ import { UserHomeEffect } from '../store/user-home/user-home.effect';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { AutoCompleteModule } from '../components/autocomplete/auto-complete.module';
 import { ClickOutsideDirective } from '../directives/clickout-event/click-outside-event';
+import { WorkoutPage } from '../workout-page/workout-page';
 
 const routes: Routes = [
   {
     path: '',
     component: UserHomePage,
   },
+
+
+
 ];
 
 @NgModule({
@@ -31,7 +35,7 @@ const routes: Routes = [
     IonicSelectableComponent,
     AutoCompleteModule,
   ],
-  declarations: [UserHomePage, ClickOutsideDirective],
+  declarations: [UserHomePage, ClickOutsideDirective ],
   providers: [],
 })
 export class UserHomePageModule {}

@@ -6,37 +6,43 @@
         <span (click)="navigateBack()"
           ><ion-icon name="arrow-back-outline"></ion-icon
         ></span>
-        <h1 class="workout-name">{{workoutFile.workout.workout_name}}</h1>
+        <h1 class="workout-name">{{getWorkoutName()}}</h1>
       </div>
       <div class="workout" [hidden]="loading">
         <img [src]="workoutFile.gifUrl" alt="" (load)="loading = false" />
       </div>
 
-      <form [hidden]="loading">
+      <form
+        [hidden]="loading"
+        [formGroup]="workoutForm"
+        (submit)="addWorkout()"
+      >
         <h1>Add Workout</h1>
         <div class="workout-inputs">
           <div>
-            <label for="weight">Weight</label>
-            <input id="weight" />
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" type="number" formControlName="weight" />
           </div>
           <div>
             <label for="reps">Reps</label>
-            <input id="reps" />
+            <input id="reps" type="number" formControlName="reps" />
           </div>
           <div>
             <label for="sets">Sets</label>
-            <input id="sets" />
+            <input id="sets" type="number" formControlName="sets" />
           </div>
           <div>
             <label for="intensity">Intensity</label>
-            <ion-select placeholder="Intensity">
+            <ion-select placeholder="Intensity" formControlName="intensity">
               <ion-select-option>Easy</ion-select-option>
               <ion-select-option>Medium</ion-select-option>
               <ion-select-option>Hard</ion-select-option>
             </ion-select>
           </div>
         </div>
-        <button>Add Workout</button>
+        <button [disabled]="workoutForm.invalid" type="submit">
+          Add Workout
+        </button>
       </form>
     </div>
   </ng-container>

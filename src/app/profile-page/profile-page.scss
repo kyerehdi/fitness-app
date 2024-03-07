@@ -2,6 +2,19 @@
   --background: #161211;
   width: 100%;
 
+  .loading {
+    display: flex;
+    align-items: center;
+  
+    justify-content: center;
+    height: 100%;
+
+    div {
+      // border: grey 1px solid;
+      transform: scale(4);
+    }
+  }
+
   .header {
     border-bottom: 1px solid grey;
     text-align: center;
@@ -107,7 +120,9 @@
         display: flex;
         background-color: #79d7ff;
         height: 60%;
-        width: 20%;
+        width: fit-content;
+        padding-left: 15px;
+        padding-right: 15px;
 
         border-radius: 1em;
         justify-content: center;
@@ -155,9 +170,22 @@
     margin-left: auto;
     margin-right: auto;
     background-color: #79d7ff;
-    // margin-top: 2em;
+    margin-top: 2em;
     margin-bottom: 1em;
     font-size: 20px;
     border-radius: 5px;
   }
+}
+
+.container-two {
+  --background: #161211;
+}
+
+ion-skeleton-text {
+  --border-radius: 9999px;
+  --background: rgba(121, 215, 255, 0.065); /* Light blue with the original opacity */
+  --background-rgb: 121, 215, 255; /* Light blue */
+  margin-bottom: 1em;
+  z-index: 9999;
+  color: white;
 }

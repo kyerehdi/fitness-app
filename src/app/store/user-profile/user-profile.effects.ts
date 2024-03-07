@@ -19,7 +19,6 @@ export class UserProfileEffect {
             if (userId) {
               return this.personService.getPersonFromUserId(userId).pipe(
                 map((person) => {
-                  console.log('effect should hit');
                   return userProfileActions.FetchPersonSuccess({ person });
                 })
               );
@@ -46,12 +45,10 @@ export class UserProfileEffect {
       ofType(userProfileActions.FetchPersonSuccess),
       switchMap((action) => {
         if (action.person !== null) {
-          console.log('fetchPersonProfilePic got hit');
           return this.personService
             .getPersonProfilePicture(action.person?.userid)
             .pipe(
               map((profilePictureSrc) => {
-                console.log(profilePictureSrc);
                 return userProfileActions.FecthPersonProfilePictureSuccess({
                   profilePictureSrc:
                     profilePictureSrc.format + profilePictureSrc.base64String,
@@ -146,7 +143,6 @@ export class UserProfileEffect {
           .pipe(
             map((fileData) => {
               if (state.person !== null) {
-                console.log('profile updated');
                 return userProfileActions.UpdateUserProfilePictureSuccess({
                   link: fileData.format + fileData.base64String,
                 });

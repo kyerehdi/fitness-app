@@ -120,3 +120,7 @@ export const rehydatePersonProfilePicture = createAction(
   'Rehydrate Person Profile Picture',
   props<{ str: string }>()
 );
+
+export const logOut = createAction('Log User out');
+
+export const logOutSuccess = createAction('Log Out Success');

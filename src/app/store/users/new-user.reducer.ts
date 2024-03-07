@@ -58,6 +58,13 @@ export const UserState: UserStateI = {
 export const newUserReducer = createReducer(
   UserState,
 
+  on(newUserActions.logOutSuccess, (state, action) => {
+    return {
+      ...state,
+      state: UserState,
+    };
+  }),
+
   on(newUserActions.rehydatePersonProfilePicture, (state, action) => {
     return {
       ...state,
@@ -66,7 +73,6 @@ export const newUserReducer = createReducer(
   }),
 
   on(newUserActions.getDaysWorkedOutSuccess, (state, action) => {
-    console.log(action.workoutNumber);
     return {
       ...state,
       daysWorkoutThisWeek: action.workoutNumber,
@@ -150,7 +156,6 @@ export const newUserReducer = createReducer(
   }),
 
   on(newUserActions.getPersonIdSuccess, (state, action) => {
-    console.log('person id', action.personId);
     return {
       ...state,
       personId: action.personId,

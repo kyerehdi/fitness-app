@@ -33,7 +33,6 @@ export const UserProfileReducer = createReducer(
     };
   }),
   on(userProfileActions.FecthPersonProfilePictureSuccess, (state, action) => {
-    console.log(action.profilePictureSrc);
     return {
       ...state,
       profilePictureSrc: action.profilePictureSrc,
@@ -41,7 +40,6 @@ export const UserProfileReducer = createReducer(
   }),
 
   on(userProfileActions.UpdateUserProfilePictureSuccess, (state, action) => {
-    console.log('link', action.link);
     return {
       ...state,
       profilePictureSrc: action.link,

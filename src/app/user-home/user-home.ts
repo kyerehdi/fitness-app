@@ -15,6 +15,7 @@ import {
   getPersonProfilePicture,
 } from '../store/users/new-user.selectors';
 import * as moment from 'moment';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-home',
@@ -41,7 +42,8 @@ export class UserHomePage implements OnInit, OnDestroy {
   constructor(
     private workoutDataService: WorkoutDataService,
     private workoutService: WorkoutService,
-    private routeService: Router,
+    // private routeService: Router,
+    private router: NavController,
     private store$: Store<State<UserHomeStateI>>,
     private userStore$: Store<State<UserStateI>>
   ) {}
@@ -61,7 +63,7 @@ export class UserHomePage implements OnInit, OnDestroy {
 
   navToWorkoutPage(workoutFile: WorkoutFile) {
     this.workoutDataService.storeWorkoutData(workoutFile);
-    this.routeService.navigate(['workoutPage']);
+    this.router.navigateForward(['workoutPage']);
   }
 
   handleInput(event: any) {
@@ -80,8 +82,12 @@ export class UserHomePage implements OnInit, OnDestroy {
   }
 
   navToSearchResults(category: string) {
-    this.routeService.navigate(['searchWorkout'], {
+    this.router.navigateForward(['searchWorkout'], {
       queryParams: { searchString: category },
     });
+  }
+
+  logout(){
+
   }
 }

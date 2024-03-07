@@ -22,4 +22,8 @@ export class SecureStorage {
       key: name,
     }).then((newValue) => newValue.value);
   }
+
+  async removeValues() {
+    SecureStoragePlugin.clear();
+  }
 }
