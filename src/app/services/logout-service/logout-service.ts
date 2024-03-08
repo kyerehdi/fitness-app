@@ -4,6 +4,8 @@ import { AuthetnicatedUserService } from '../authenticated-user/authenticated-us
 import { UserStateI } from 'src/app/store/users/new-user.reducer';
 import { Store, State } from '@ngrx/store';
 import { SecureStorage } from '../secureStorage/secure-storage';
+import { NavController } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +13,16 @@ import { SecureStorage } from '../secureStorage/secure-storage';
 export class LogoutService {
   constructor(
     private store$: Store<State<UserStateI>>,
-    private secureStoreage: SecureStorage
+    private secureStoreage: SecureStorage,
+    private navCtrl: NavController,
+    private location: Location,
+    private router: Router
   ) {}
 
   async logout() {
+
     await this.secureStoreage.removeValues();
     localStorage.clear();
-    
+    window.location.reload();
   }
 }

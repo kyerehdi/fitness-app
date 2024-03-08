@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { NewUserEffects } from './store/users/new-user.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserProfileEffect } from './store/user-profile/user-profile.effects';
+import { AuthGuard } from './services/authGuard/authGuard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,9 @@ import { UserProfileEffect } from './store/user-profile/user-profile.effects';
     EffectsModule.forRoot([NewUserEffects]),
     BrowserAnimationsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -41,12 +41,12 @@ export class WorkoutPage implements OnInit, OnDestroy {
     private alertController: AlertController
   ) {}
   ngOnDestroy(): void {
-    console.log('Destoryed');
+
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
   ngOnInit(): void {
-    console.log('Hit');
+   
 
     this.workoutFile = this.workoutDataService.getWorkoutFile();
     this.workoutForm = this.formBuilder.group({
@@ -90,7 +90,7 @@ export class WorkoutPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe();
 
-    console.log('this is current month', date.getMonth() + 1);
+   
 
     this.userWorkoutStore$.dispatch(
       GetWorkOutsFromDate({

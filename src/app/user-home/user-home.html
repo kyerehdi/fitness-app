@@ -42,7 +42,11 @@
               (ionInput)="handleInput($event)"
             ></ion-searchbar>
           </div>
-          <ion-icon name="menu" class="menu-icon"></ion-icon>
+          <ion-icon
+            name="menu"
+            class="menu-icon"
+            (click)="navToSearchResults('')"
+          ></ion-icon>
         </div>
         <ng-container *ngIf="(isSearching$ | async)">
           <ng-container

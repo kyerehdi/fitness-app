@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
 import * as newUserAction from './new-user.actions';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, from, map, of, switchMap, withLatestFrom } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  from,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs';
 import { UserStateI } from './new-user.reducer';
 import { State, Store } from '@ngrx/store';
 import { getPerson, getUser, newUserState } from './new-user.selectors';
 import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
 import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
 import cloneDeep from 'lodash.clonedeep';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { User } from 'src/fitness-app-sdk/package/models/users';
 import { Router } from '@angular/router';
 import { SecureStorage } from 'src/app/services/secureStorage/secure-storage';
@@ -17,6 +26,7 @@ import { UserWorkoutService } from 'src/fitness-app-sdk/package/services/user-wo
 import { WorkoutNumber } from 'src/fitness-app-sdk/package/services/user-workout-service/user-workout-service';
 import { UpdateUserProfilePictureSuccess } from '../user-profile/user-profile.actions';
 import { LogoutService } from 'src/app/services/logout-service/logout-service';
+import { GetWorkOutsFromDate } from '../user-workouts/user-workouts.actions';
 
 @Injectable()
 export class NewUserEffects {
@@ -92,8 +102,8 @@ export class NewUserEffects {
           user.password = action.user.password;
           return this.userService.authenticate(user).pipe(
             switchMap((token) => {
+              
               localStorage.setItem('token', token);
-              this.router.navigate(['user-home']);
               this.secureStorage.setValue('user', JSON.stringify(user));
 
               return this.userService
@@ -128,6 +138,7 @@ export class NewUserEffects {
       ofType(newUserAction.authenticationSuccess),
       withLatestFrom(this.store$.select(newUserState)),
       switchMap(([action, state]) => {
+        this.navCtrl.navigateRoot('user-home');
         return this.personService.getPersonFromUserId(action.userId).pipe(
           map((person) => {
             this.secureStorage.setValue('person', JSON.stringify(person));
@@ -191,7 +202,7 @@ export class NewUserEffects {
 
   getDaysWorkedOut$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(newUserAction.getPersonIdSuccess),
+      ofType(newUserAction.getPersonIdSuccess, GetWorkOutsFromDate),
       switchMap((action) => {
         const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
         const endOfWeek = moment().endOf('week').format('YYYY-MM-DD');
@@ -228,14 +239,53 @@ export class NewUserEffects {
     );
   });
 
+  handleError$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(
+          newUserAction.SubmitUserFail,
+          newUserAction.SubmitPersonFail,
+          newUserAction.authenticationFailure,
+          newUserAction.getPersonIdFailure,
+          newUserAction.getDaysWorkedOutFailure,
+          newUserAction.getPersonProfilePictureFailure
+          // Add other failure actions here as needed
+        ),
+        mergeMap((action: any) => {
+          const message =
+            action.httpExpetion?.message ||
+            'An unexpected error occurred. Please try again.';
+
+          return this.showError(message).pipe(
+            catchError(() => of()) // Catch any errors in showing the alert
+          );
+        })
+      ),
+    { dispatch: false }
+  ); // This effect does not dispatch an action
+
+  private showError(message: string) {
+    return from(
+      this.alertController
+        .create({
+          header: 'Error',
+          message,
+          buttons: ['OK'],
+        })
+        .then((alert) => alert.present())
+    );
+  }
+
   constructor(
     private actions$: Actions,
+    private alertController: AlertController,
     private store$: Store<State<UserStateI>>,
     private userService: UserService,
     private personService: PersonService,
     private router: Router,
     private secureStorage: SecureStorage,
     private userWorkoutService: UserWorkoutService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    private navCtrl: NavController
   ) {}
 }

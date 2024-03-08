@@ -58,12 +58,9 @@ export const UserState: UserStateI = {
 export const newUserReducer = createReducer(
   UserState,
 
-  on(newUserActions.logOutSuccess, (state, action) => {
-    return {
-      ...state,
-      state: UserState,
-    };
-  }),
+  on(newUserActions.logOutSuccess, () => ({
+    ...UserState, 
+  })),
 
   on(newUserActions.rehydatePersonProfilePicture, (state, action) => {
     return {

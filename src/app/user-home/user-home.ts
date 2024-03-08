@@ -16,6 +16,7 @@ import {
 } from '../store/users/new-user.selectors';
 import * as moment from 'moment';
 import { NavController } from '@ionic/angular';
+import { logOut } from '../store/users/new-user.actions';
 
 @Component({
   selector: 'app-user-home',
@@ -87,7 +88,8 @@ export class UserHomePage implements OnInit, OnDestroy {
     });
   }
 
-  logout(){
-
+  logout() {
+    this.userStore$.dispatch(logOut());
+    
   }
 }

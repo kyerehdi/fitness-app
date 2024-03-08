@@ -4,6 +4,7 @@ import { ActionSheetController, NavController } from '@ionic/angular';
 import { Actions, ofType } from '@ngrx/effects';
 import {
   authenticationSuccess,
+  logOut,
   refreshAuthentication,
 } from './store/users/new-user.actions';
 import { map } from 'rxjs';
@@ -34,15 +35,24 @@ export class AppComponent implements OnInit {
         ofType(authenticationSuccess),
         map(() => {
           this.isLoggedIn = true;
+         
         })
       )
       .subscribe();
 
-    this.userStore.dispatch(refreshAuthentication());
+   
+
+    this.actions
+      .pipe(
+        ofType(logOut),
+        map(() => {
+          this.isLoggedIn = false;
+        })
+      )
+      .subscribe();
   }
 
   navigate(url: string) {
-   
     this.navCtrl.navigateRoot(url);
   }
 }
