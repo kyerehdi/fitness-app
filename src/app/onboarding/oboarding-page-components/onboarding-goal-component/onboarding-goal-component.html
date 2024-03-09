@@ -32,6 +32,6 @@
     </div>
   </div>
   <div class="btn-container">
-    <button (click)="handleOnContinue()">Continue</button>
+    <button (click)="handleOnContinue()" [disabled]="goal === ''">Continue</button>
   </div>
 </div>

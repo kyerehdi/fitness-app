@@ -41,13 +41,10 @@ export class WorkoutPage implements OnInit, OnDestroy {
     private alertController: AlertController
   ) {}
   ngOnDestroy(): void {
-
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
   ngOnInit(): void {
-   
-
     this.workoutFile = this.workoutDataService.getWorkoutFile();
     this.workoutForm = this.formBuilder.group({
       weight: [null, Validators.required],
@@ -74,9 +71,12 @@ export class WorkoutPage implements OnInit, OnDestroy {
   }
 
   async addWorkout() {
-    const date = new Date();
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset() * 60000; // Convert offset to milliseconds
+    const adjustedDate = new Date(now.getTime() - timezoneOffset);
+
     const userWorkout = new UserWorkout();
-    userWorkout.date = date;
+    userWorkout.date = adjustedDate; // Send as ISO string, which is always in UTC
     userWorkout.intensity = this.workoutForm.get('intensity')?.value;
     userWorkout.personid = Number(this.personId);
     userWorkout.reps = this.workoutForm.get('reps')?.value;
@@ -90,12 +90,10 @@ export class WorkoutPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe();
 
-   
-
     this.userWorkoutStore$.dispatch(
       GetWorkOutsFromDate({
-        year: new Date().getFullYear(),
-        month: date.getMonth() + 1,
+        year: adjustedDate.getFullYear(),
+        month: adjustedDate.getMonth() + 1, // getMonth() is 0-indexed, so add 1 for the correct month number
         personId: userWorkout.personid,
       })
     );

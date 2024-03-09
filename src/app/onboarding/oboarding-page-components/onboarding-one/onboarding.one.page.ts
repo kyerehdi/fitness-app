@@ -36,6 +36,8 @@ export class FirstOnboardingPage implements AfterViewInit {
   @Output()
   continueToNextPage = new EventEmitter<number>();
 
+  gender:string | null = null ;
+
   constructor(private store$: Store<State<UserStateI>>) {}
   ngAfterViewInit(): void {
     this.focusOnRightDiv();
@@ -50,9 +52,9 @@ export class FirstOnboardingPage implements AfterViewInit {
   }
 
   focusOnRightDiv() {
-    const gender = this.person.gender;
+     this.gender = this.person.gender;
 
-    switch (gender) {
+    switch (this.gender) {
       case 'male':
         this.maleDivElement?.nativeElement.focus();
         break;

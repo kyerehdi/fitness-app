@@ -20,7 +20,7 @@
         formControlName="age"
         type="number"
       />
-      <!-- <input class="field" placeholder="Email" formControlName="email" /> -->
+
       <input
         class="field"
         placeholder="Phone number"
@@ -31,8 +31,8 @@
   <div class="btn-container">
     <button
       class="save-btn"
-     
       (click)="handleFormSubmission()"
+      [disabled]="formGroup.invalid || !userProfilePicture "
     >
       Save Changes
     </button>

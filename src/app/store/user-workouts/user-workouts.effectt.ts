@@ -15,11 +15,13 @@ export class UserWorkouts {
         return this.userWorkoutService
           .getWorkoutFromDate(action.year, action.month, action.personId)
           .pipe(
-            map((userWorkouts) =>
-              userWorkoutActions.GetWorkOutsFromDateSuccess({
+            map((userWorkouts) => {
+              console.log('userWorkouts', userWorkouts);
+
+              return userWorkoutActions.GetWorkOutsFromDateSuccess({
                 workouts: userWorkouts,
-              })
-            ),
+              });
+            }),
             catchError((error) => {
               return of(
                 userWorkoutActions.GetWorkOutsFromDateFailure({ error })

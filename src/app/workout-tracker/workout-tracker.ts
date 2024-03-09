@@ -90,17 +90,15 @@ export class WorkoutTracker implements OnInit {
   }
 
   filterWorkouts() {
-    const targetDate = new Date(this.date);
-    this.filterdWorkouts = [
-      ...this.currentWorkouts.filter((workout) => {
-        const workoutDate = new Date(workout.date);
+    const targetDate = new Date(this.date).toISOString().slice(0, 10); // Convert to YYYY-MM-DD format
+    console.log('targetDate', targetDate);
 
-        return (
-          workoutDate.getDate() === targetDate.getDate() &&
-          workoutDate.getMonth() === targetDate.getMonth() &&
-          workoutDate.getFullYear() === targetDate.getFullYear()
-        );
-      }),
-    ];
+    this.filterdWorkouts = this.currentWorkouts.filter((workout) => {
+      
+      const workoutDate = new Date(workout.date).toISOString().slice(0, 10); // Same conversion
+      return workoutDate === targetDate;
+    });
+
+    console.log('this is filtered Workouts', this.filterdWorkouts);
   }
 }

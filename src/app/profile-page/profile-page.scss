@@ -5,7 +5,7 @@
   .loading {
     display: flex;
     align-items: center;
-  
+
     justify-content: center;
     height: 100%;
 
@@ -182,9 +182,14 @@
 }
 
 ion-skeleton-text {
-  --border-radius: 9999px;
-  --background: rgba(121, 215, 255, 0.065); /* Light blue with the original opacity */
-  --background-rgb: 121, 215, 255; /* Light blue */
+  --border-radius: 0px;
+  --background: rgba(
+    192,
+    192,
+    192,
+    0.2
+  ); /* Silver-grey with adjusted opacity */
+  --background-rgb: 192, 192, 192; /* Silver-grey */
   margin-bottom: 1em;
   z-index: 9999;
   color: white;

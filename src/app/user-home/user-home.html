@@ -7,7 +7,7 @@
             ><img [src]="profilePicture$ | async" alt=""
           /></span>
           <div class="greetings">
-            <h1>Good Morning,</h1>
+            <h1>Hello,</h1>
             <p>Victor Gonzalez</p>
           </div>
         </div>
@@ -29,7 +29,7 @@
     <br />
     <ion-row color="primary" class="row"> </ion-row>
 
-    <ng-container *ngIf="!(isLoading$ | async)">
+    <ng-container *ngIf="!(isLoading$ | async); else loadingContent">
       <div
         class="auto"
         clickOutside
@@ -49,9 +49,7 @@
           ></ion-icon>
         </div>
         <ng-container *ngIf="(isSearching$ | async)">
-          <ng-container
-            *ngIf="(searchedWorkouts$ | async) as searchedWorkouts "
-          >
+          <ng-container *ngIf="(searchedWorkouts$ | async) as searchedWorkouts">
             <auto-complete
               [workouts]="searchedWorkouts"
               (navEmit)="navToWorkoutPage($event)"
@@ -69,11 +67,11 @@
           [name]="workoutFile.workout.workout_name"
           [bodyCategory]="workoutFile.workout.major_muscle_group"
           (iconClicked)="navToWorkoutPage(workoutFile)"
-        ></workout-card>
+        >
+        </workout-card>
       </div>
 
       <h1 style="font-size: 20px; margin-left: 1em">Quick workouts</h1>
-
       <div
         class="workouts"
         *ngIf="(quickWorkoutFiles$ | async) as quickWorkoutFiles"
@@ -84,9 +82,63 @@
           [name]="workoutFile.workout.workout_name"
           [bodyCategory]="workoutFile.workout.major_muscle_group"
           (iconClicked)="navToWorkoutPage(workoutFile)"
-        ></workout-card>
+        >
+        </workout-card>
       </div>
     </ng-container>
+
+    <ng-template #loadingContent>
+      <div class="search-container-placeholder">
+        <ion-skeleton-text
+          animated
+          style="
+            width: 80%;
+            height: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2em;
+          "
+        ></ion-skeleton-text>
+      </div>
+
+      <div class="workouts-placeholder">
+        <ion-skeleton-text
+          animated
+          style="
+            width: 90%;
+            height: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        ></ion-skeleton-text>
+      </div>
+      <div class="workouts-placeholder">
+        <ion-skeleton-text
+          animated
+          style="
+            width: 90%;
+            height: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        ></ion-skeleton-text>
+      </div>
+      <div class="workouts-placeholder">
+        <ion-skeleton-text
+          animated
+          style="
+            width: 90%;
+            height: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        ></ion-skeleton-text>
+      </div>
+    </ng-template>
 
     <h1 style="font-size: 20px; margin-left: 1em">Categories</h1>
     <div class="categories">
@@ -128,8 +180,8 @@
       </div>
     </div>
 
-    <ng-container *ngIf="(isLoading$ | async)">
+    <!-- <ng-container *ngIf="(isLoading$ | async)">
       <ion-spinner class="spinner" name="circles"></ion-spinner>
-    </ng-container>
+    </ng-container> -->
   </div>
 </ion-content>

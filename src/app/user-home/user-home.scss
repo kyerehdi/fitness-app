@@ -180,3 +180,16 @@
     }
   }
 }
+
+ion-skeleton-text {
+  --border-radius: 0px;
+  --background: rgba(
+    192,
+    192,
+    192,
+    0.2
+  ); /* Silver-grey with adjusted opacity */
+  --background-rgb: 192, 192, 192; /* Silver-grey */
+  margin-bottom: 2em;
+  z-index: 9999;
+}
