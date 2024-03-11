@@ -17,7 +17,11 @@ import { getPerson, getUser, newUserState } from './new-user.selectors';
 import { UserService } from 'src/fitness-app-sdk/package/services/user-service/user-service';
 import { PersonService } from 'src/fitness-app-sdk/package/services/person-service/person-service';
 import cloneDeep from 'lodash.clonedeep';
-import { AlertController, NavController } from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+} from '@ionic/angular';
 import { User } from 'src/fitness-app-sdk/package/models/users';
 import { Router } from '@angular/router';
 import { SecureStorage } from 'src/app/services/secureStorage/secure-storage';
@@ -51,7 +55,7 @@ export class NewUserEffects {
       withLatestFrom(this.store$.select(newUserState)),
       switchMap(([action, state]) => {
         const person = cloneDeep(state.person);
-        person.email = action.user.email;
+        person.email = action.user.email.toLowerCase();
         person.userID = action.user.id;
         person.profilePictureFileName = person.email + person.userID;
         return this.personService.createPerson(person).pipe(
@@ -96,13 +100,18 @@ export class NewUserEffects {
       ofType(newUserAction.SubmitPersonSuccess, newUserAction.authenticate),
       withLatestFrom(this.store$.select(newUserState)),
       switchMap(([action, state]) => {
+        this.loadingCtrl
+          .create({
+            message: 'Logging In',
+          })
+          .then((loading) => loading.present());
+
         if (action.user) {
           const user = new User();
-          user.email = action.user.email;
+          user.email = action.user.email.toLowerCase();
           user.password = action.user.password;
           return this.userService.authenticate(user).pipe(
             switchMap((token) => {
-              
               localStorage.setItem('token', token);
               this.secureStorage.setValue('user', JSON.stringify(user));
 
@@ -110,14 +119,17 @@ export class NewUserEffects {
                 .getUserId(String(user.email), token.token)
                 .pipe(
                   map((userId) => {
+                    this.loadingCtrl.dismiss();
                     return newUserAction.authenticationSuccess({ userId });
                   }),
                   catchError((err) => {
+                    this.loadingCtrl.dismiss();
                     return of(newUserAction.authenticationFailure(err));
                   })
                 );
             }),
             catchError((err) => {
+              this.loadingCtrl.dismiss();
               return of(newUserAction.authenticationFailure({ err }));
             })
           );
@@ -286,6 +298,7 @@ export class NewUserEffects {
     private secureStorage: SecureStorage,
     private userWorkoutService: UserWorkoutService,
     private logoutService: LogoutService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loadingCtrl: LoadingController
   ) {}
 }
